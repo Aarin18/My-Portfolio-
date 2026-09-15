@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script>
+  (function () {
+    try {
+      const savedTheme = localStorage.getItem('arin-theme');
+      document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+    } catch (error) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }());
+</script>
+<title>ARIN PATEL — Kinetic Web Loading Intro (5.0s)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --surface: #FFFFFF;
+    --surface-secondary: #F4F4F0;
+    --surface-tertiary: #E8E8E3;
+    --on-surface: #111111;
+    --on-surface-secondary: #555555;
+    --on-surface-muted: #777777;
+    --border: #111111;
+    --border-subtle: #B8B8B2;
+    --accent: #2F5CFF;
+    --on-accent: #FFFFFF;
+    --hover-surface: #EDEDE8;
+    --active-surface: #DEDED8;
+    --focus-ring: #2F5CFF;
+    --intro-surface: #FFFFFF;
+    --hud-surface: #FFFFFF;
+    --hud-text: #111111;
+    --grid-major: rgba(47, 92, 255, .04);
+    --grid-minor: rgba(47, 92, 255, .015);
+    --stage-shadow: 0 24px 70px -12px rgba(0, 0, 0, .25);
+    --streak-blend: multiply;
+  }
+
+  :root[data-theme="dark"] {
+    --surface: #111111;
+    --surface-secondary: #1A1A18;
+    --surface-tertiary: #242421;
+    --on-surface: #F5F5F0;
+    --on-surface-secondary: #C7C7C0;
+    --on-surface-muted: #999992;
+    --border: #F5F5F0;
+    --border-subtle: #555550;
+    --accent: #2F5CFF;
+    --on-accent: #FFFFFF;
+    --hover-surface: #20201D;
+    --active-surface: #2A2A27;
+    --focus-ring: #2F5CFF;
+    --intro-surface: #111111;
+    --hud-surface: #111111;
+    --hud-text: #F5F5F0;
+    --grid-major: rgba(47, 92, 255, .06);
+    --grid-minor: rgba(47, 92, 255, .025);
+    --stage-shadow: 0 24px 70px -12px rgba(0, 0, 0, .45);
+    --streak-blend: normal;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--intro-surface);
+    color: var(--on-surface);
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    user-select: none;
+  }
+
+  /* 16:9 Presentation Stage */
+  .stage-wrapper {
+    width: 96vw;
+    max-width: 1280px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+  }
+
+  /* Pristine light grey paper background with technical millimeter blueprint grid */
+  .blueprint-grid {
+    background-color: var(--intro-surface);
+    background-image: 
+      linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+  }
+
+  /* Corner drafting crop marks */
+  .crop-mark {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    border-color: var(--accent);
+  }
+
+  /* Speed Streak Tunnel Canvas */
+  .streak-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: var(--streak-blend);
+  }
+
+  /* Dolly 3D camera layer */
+  .dolly-viewport {
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+    will-change: transform, filter, opacity;
+  }
+
+  body { background-color: var(--intro-surface) !important; color: var(--on-surface); }
+  #stage { box-shadow: var(--stage-shadow); }
+  #main-frame { background-color: var(--intro-surface) !important; border: 1px solid var(--border); }
+  #grid-bg { background-color: var(--intro-surface) !important; }
+  #hud-header, #hud-bottom-info { color: var(--hud-text) !important; background-color: var(--hud-surface); }
+  #status-blinker { background-color: var(--accent) !important; box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent); }
+  #line-1 { color: var(--on-surface) !important; }
+  #line-2 { color: var(--on-surface-secondary) !important; }
+  #resolve-check { border: 1px solid var(--border-subtle); background-color: var(--surface-secondary); }
+  #resolve-check svg, #resolved-view p:last-child { color: var(--accent) !important; }
+  #flash-overlay { background-color: var(--intro-surface) !important; }
+  body, #main-frame, #grid-bg, #hud-header, #hud-bottom-info, #line-1, #line-2, #resolved-view, #resolve-check, #flash-overlay, .portfolio-hero, .portfolio-hero *, .hero-inspector, .hero-links a, .theme-toggle {
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+  }
+  #blueprint-canvas line { stroke: var(--accent); }
+  #blueprint-canvas text { stroke: none; fill: var(--accent); }
+  #blueprint-canvas rect, #blueprint-canvas path { stroke: var(--accent); }
+  #blueprint-canvas circle { stroke: var(--accent); fill: var(--accent); }
+</style>
+</head>
+<body class="antialiased flex flex-col items-center justify-center p-4" id="body-root">
+<!-- Main 16:9 Stage Container -->
+<main class="stage-wrapper relative flex items-center justify-center rounded-sm overflow-hidden cursor-pointer" id="stage">
+<!-- Drafting Canvas Sheet Frame -->
+<div class="w-full h-full relative overflow-hidden" id="main-frame">
+<!-- Background Technical Grid -->
+<div class="absolute inset-0 w-full h-full blueprint-grid pointer-events-none z-0" id="grid-bg"></div>
+<!-- 3D DOLLY CAMERA WRAPPER: static 0-2.5s, pushes forward from 2.5s to 3.5s -->
+<div class="absolute inset-0 w-full h-full dolly-viewport z-10" id="dolly-scene">
+<!-- 4 Corner Precision Drafting Crop Marks (Technical Blue #2F5CFF) -->
+<div class="z-20 pointer-events-none" id="hud-corner-marks">
+<div class="crop-mark top-6 left-6 border-t-2 border-l-2" id="crop-tl"></div>
+<div class="crop-mark top-6 right-6 border-t-2 border-r-2" id="crop-tr"></div>
+<div class="crop-mark bottom-6 left-6 border-b-2 border-l-2" id="crop-bl"></div>
+<div class="crop-mark bottom-6 right-6 border-b-2 border-r-2" id="crop-br"></div>
+</div>
+<!-- BLUE TECHNICAL HUD CHROME OVERLAY -->
+<!-- Top HUD Header Bar -->
+<header class="absolute top-6 left-10 right-10 flex items-center justify-between text-[11px] font-mono tracking-wider uppercase pointer-events-none z-30 transition-opacity duration-300" id="hud-header">
+<div class="flex items-center gap-2.5">
+<span class="inline-block w-2 h-2" id="status-blinker"></span>
+<span class="font-semibold tracking-widest text-[11px]">SYS.INIT // CALIBRATION_LOADER</span>
+</div>
+<div class="flex items-center gap-5">
+<span class="hidden sm:inline-block tracking-widest font-medium text-[10px]">ASPECT: 16:9_SAFE</span>
+<span class="font-bold font-mono tabular-nums tracking-wider text-[12px]" id="timer-display">00:00.00s</span>
+</div>
+</header>
+<!-- Bottom HUD Legend & Live Status -->
+<div class="absolute bottom-6 left-10 right-10 flex items-center justify-between text-[11px] font-mono pointer-events-none z-30 transition-opacity duration-300" id="hud-bottom-info">
+<div class="flex items-center gap-5 hidden sm:flex" id="legend-nodes">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 inline-block"></span>
+<span class="font-medium text-[10px] tracking-wide">NODE_SYS</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full border bg-transparent inline-block"></span>
+<span class="font-medium text-[10px] tracking-wide">OPTICAL_AXIS</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-[1px] inline-block"></span>
+<span class="font-medium text-[10px] tracking-wide">DATUM_ALIGN</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-medium uppercase tracking-wider text-[11px]" id="status-label">INITIALIZING 5.0S SEQUENCE...</span>
+</div>
+</div>
+<!-- SVG DRAFTING CANVAS (1200x675 Viewbox for perfect coordinate pinning) -->
+<svg class="w-full h-full absolute inset-0 z-10 pointer-events-none" fill="none" id="blueprint-canvas" viewbox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+<!-- Blueprint datum guides & crosshairs -->
+<g id="hud-guides" opacity="0">
+<!-- Center Vertical Axis -->
+<line opacity="0.25" stroke="var(--accent)" stroke-dasharray="3 3" stroke-width="0.8" x1="600" x2="600" y1="120" y2="550"></line>
+<!-- Line 1 Top Bound -->
+<line opacity="0.35" stroke="var(--accent)" stroke-dasharray="3 3" stroke-width="0.8" x1="160" x2="1040" y1="210" y2="210"></line>
+<text fill="var(--accent)" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="500" letter-spacing="1.5" opacity="0.7" x="180" y="204">CAP_DATUM +110.0</text>
+<!-- Line 1 Baseline -->
+<line opacity="0.45" stroke="var(--accent)" stroke-width="0.9" x1="160" x2="1040" y1="355" y2="355"></line>
+<text fill="var(--accent)" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" opacity="0.75" x="970" y="350">L1_BASE [355]</text>
+<!-- Line 2 Midline & Baseline -->
+<line opacity="0.3" stroke="var(--accent)" stroke-dasharray="2 2" stroke-width="0.8" x1="280" x2="920" y1="422" y2="422"></line>
+<text fill="var(--accent)" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="500" opacity="0.65" x="290" y="416">SECONDARY_DATUM // AXIS-02</text>
+</g>
+<!-- Blue HUD Micro-elements (spring pop-in nodes & brackets) -->
+<g id="micro-nodes-layer"></g>
+</svg>
+<!-- TWO-LINE CENTERED TYPOGRAPHY CONTAINER -->
+<!-- Line 1: ARIN PATEL (Bold condensed uppercase) -->
+<!-- Line 2: NO FINAL VERSION. (Clean graphite subtitle, tracking) -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20" id="typography-container">
+<!-- Line 1: ARIN PATEL -->
+<div class="flex items-center justify-center leading-none tracking-[0.02em] font-extrabold uppercase font-['Barlow_Condensed'] text-[92px] sm:text-[116px] md:text-[132px]" id="line-1">
+<!-- Characters dynamically populated or tracked -->
+</div>
+<!-- Line 2: NO FINAL VERSION. -->
+<div class="flex items-center justify-center mt-1 sm:mt-2 tracking-[0.38em] font-semibold uppercase font-['JetBrains_Mono',monospace] text-[13px] sm:text-[16px] md:text-[18px]" id="line-2">
+<!-- Characters dynamically populated or tracked -->
+</div>
+</div>
+</div><!-- /dolly-scene -->
+<!-- SPEED STREAK & MOTION TUNNEL CANVAS (Triggered 2.5s - 3.5s) -->
+<canvas class="streak-canvas z-25 opacity-0" height="675" id="streak-canvas" width="1200"></canvas>
+<!-- LUMINOUS WHITE FLASH BLOOM WIPE OVERLAY (Triggered at 3.5s) -->
+<div class="absolute inset-0 pointer-events-none z-40 opacity-0" id="flash-overlay"></div>
+<!-- RESOLVE STATE SCREEN (3.5s - 5.0s: Clean empty light blueprint grid settled) -->
+<div class="absolute inset-0 pointer-events-none z-30 flex flex-col items-center justify-center opacity-0 transition-opacity duration-700" id="resolved-view">
+<div class="flex flex-col items-center gap-3 text-center">
+<div class="w-9 h-9 rounded-full flex items-center justify-center shadow-sm backdrop-blur-sm" id="resolve-check">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+</div>
+<p class="font-mono text-[11px] uppercase tracking-[0.28em] font-semibold">STAGE CALIBRATED</p>
+<p class="font-mono text-[9.5px] tracking-[0.2em] uppercase">PRISTINE CANVAS READY // 5.00S COMPLETED</p>
+</div>
+</div>
+</div>
+</main>
+<!-- HERO SECTION: mounts after the intro resolve state without changing the intro timeline -->
+<section class="portfolio-hero" id="portfolio-hero" aria-labelledby="hero-title">
+<div class="hero-grid" aria-hidden="true"></div>
+<div class="hero-frame">
+<span class="hero-crop hero-crop-tl"></span>
+<span class="hero-crop hero-crop-tr"></span>
+<span class="hero-crop hero-crop-bl"></span>
+<span class="hero-crop hero-crop-br"></span>
+<header class="hero-hud hero-hud-top"><span><i class="hero-status-node"></i>SECTION.01 // ARIN_PATEL</span><span class="hero-hud-controls"><span>REV_1.0 <b>12C / 08C / 04C</b></span><span class="theme-control"><span>MODE:</span><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false"><span data-theme-choice="light">LIGHT</span><span data-theme-choice="dark">DARK</span></button></span></span></header>
+<div class="hero-layout">
+<aside class="hero-index hero-reveal" style="--reveal-delay: 80ms"><span class="hero-index-number">01</span><span class="hero-index-rule"></span><span class="hero-index-label">IDENTITY<br/>PLATE</span></aside>
+<div class="hero-copy hero-reveal" style="--reveal-delay: 160ms">
+<p class="hero-kicker">CSE // AI &amp; MACHINE LEARNING</p>
+<h1 id="hero-title">ARIN<br/><em>PATEL</em></h1>
+<div class="hero-datum" aria-hidden="true"><span></span><span>CAP_HT +104</span><span></span></div>
+<p class="hero-role">AI/ML + SOFTWARE DEVELOPER</p>
+<p class="hero-positioning">I am a 2nd-year CSE AI/ML student building practical projects, solving problems with DSA, and learning how full-stack systems work under the hood.</p>
+<div class="hero-actions"><a class="hero-action-primary" href="https://github.com/" target="_blank" rel="noreferrer">VIEW PROJECTS <b>-&gt;</b></a><a class="hero-action-secondary" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">CONTACT ME <b>-&gt;</b></a></div>
+<div class="hero-meta"><span>FOCUS: DSA / MERN / AI-ML</span><span>NEXT: INTERNSHIPS</span></div>
+</div>
+<div class="hero-inspector hero-reveal" style="--reveal-delay: 260ms"><div class="hero-inspector-head"><span>PROFILE_SPEC</span><strong>REV_1.0</strong></div><div class="hero-spec-list"><div><span>LOCATION</span><strong>GUJARAT, INDIA</strong></div><div><span>EDUCATION</span><strong>B.TECH CSE - AI/ML</strong></div><div><span>STAGE</span><strong>2ND YEAR / 3RD SEM</strong></div><div><span>STATUS</span><strong>OPEN TO INTERNSHIPS</strong></div></div><span class="hero-coordinate">X: 0600.00 / Y: 0337.50</span></div>
+</div>
+<nav class="hero-links hero-reveal" style="--reveal-delay: 360ms" aria-label="External profiles"><a href="https://github.com/" target="_blank" rel="noreferrer"><span>[01]</span> GITHUB <b>-&gt;</b></a><a href="https://leetcode.com/" target="_blank" rel="noreferrer"><span>[02]</span> LEETCODE <b>-&gt;</b></a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><span>[03]</span> LINKEDIN <b>-&gt;</b></a></nav>
+<footer class="hero-hud hero-hud-bottom"><span>DATUM: IDENTITY / PLATE_01</span><span>READY FOR INSPECTION <i class="hero-pulse-node"></i></span></footer>
+</div>
+<section class="about-section" id="about" aria-labelledby="about-title">
+<div class="about-inner">
+<header class="about-heading about-reveal"><span class="about-section-code">SECTION.02 // PROFILE_SHEET</span><h2 id="about-title">ABOUT<br/><em>THE BUILDER</em></h2><p class="about-heading-note">A WORKING PROFILE / NOT A FINISHED SPEC</p></header>
+<div class="about-intro about-reveal"><span class="about-label">01 / CONTEXT</span><p>I’m Arin Patel, a CSE AI/ML student currently exploring the intersection of software development, problem solving, and artificial intelligence.</p><p>I’m building my foundation through DSA, Java, MERN, and AI/ML while working on practical projects and learning by building.</p></div>
+<div class="about-profile about-reveal"><div class="about-panel-head"><span>PROFILE</span><strong>IDENTITY_DATA</strong></div><dl><div><dt>NAME</dt><dd>ARIN PATEL</dd></div><div><dt>DEGREE</dt><dd>B.TECH CSE - AI/ML</dd></div><div><dt>YEAR</dt><dd>02 / 04</dd></div><div><dt>SEMESTER</dt><dd>03</dd></div><div><dt>CURRENT STATUS</dt><dd>STUDENT / DEVELOPER</dd></div><div><dt>FOCUS</dt><dd>AI/ML · DSA · SOFTWARE</dd></div></dl></div>
+<div class="about-journey about-reveal"><div class="about-panel-head"><span>LEARNING_JOURNEY</span><strong>LIVE_TRACK</strong></div><div class="about-journey-grid"><div><span>CURRENTLY BUILDING</span><strong>MERN / NODE.JS</strong></div><div><span>CURRENTLY SOLVING</span><strong>DSA / JAVA</strong></div><div><span>CURRENTLY EXPLORING</span><strong>AI / MACHINE LEARNING</strong></div><div><span>CURRENTLY PREPARING FOR</span><strong>INTERNSHIPS / PLACEMENTS</strong></div></div></div>
+<div class="about-skills about-reveal"><div class="about-panel-head"><span>SKILLS_SNAPSHOT</span><strong>FOUNDATION_01</strong></div><div class="about-skill-grid"><div><span>LANGUAGES</span><strong>C · C++ · JAVA · PYTHON · JAVASCRIPT</strong></div><div><span>WEB</span><strong>HTML · CSS · JAVASCRIPT · MERN · NODE.JS</strong></div><div><span>CORE</span><strong>DSA · OOP · PROBLEM SOLVING</strong></div><div><span>INTEREST</span><strong>AI / ML</strong></div></div></div>
+</div>
+</section>
+<section class="projects-section" id="projects" aria-labelledby="projects-title">
+<div class="projects-inner">
+<header class="projects-heading project-reveal"><span class="projects-section-code">SECTION.03 // PROJECT_ARCHIVE</span><h2 id="projects-title">WHAT I<br/><em>BUILD</em></h2><p>SELECTED WORK / PROJECT RECORDS</p></header>
+<article class="project-featured project-reveal"><div class="project-entry-head"><span>FEATURED / 01</span><strong>PROJECTMENTORAI</strong></div><div class="project-featured-body"><div><p class="project-type">AI-ASSISTED WEB TOOL</p><h3>PROJECTMENTORAI</h3><p class="project-description">A web tool that helps students evaluate and improve project ideas using AI-generated feasibility feedback.</p><div class="project-stack"><span>STACK</span><strong>HTML · CSS · JAVASCRIPT · NODE.JS · EXPRESS · GEMINI API</strong></div></div><div class="project-featured-mark" aria-hidden="true"><span>01</span><i></i><b>BUILD / LEARN / ITERATE</b></div></div><div class="project-entry-foot"><span>STATUS // RECORD PROVIDED</span><span>LINKS // NOT CONFIGURED</span></div></article>
+<div class="project-archive project-reveal"><div class="project-archive-head"><span>ARCHIVE_ENTRIES</span><strong>03 RECORDS</strong></div><article class="project-entry"><span class="project-number">02</span><div><h3>CIVICOS / CIVICAI</h3><p>PROJECT RECORD // DESCRIPTION AND STACK DATA TO BE ADDED.</p></div><span class="project-entry-status">RECORD_PENDING</span></article><article class="project-entry"><span class="project-number">03</span><div><h3>CHATAPP</h3><p>PROJECT RECORD // DESCRIPTION AND STACK DATA TO BE ADDED.</p></div><span class="project-entry-status">RECORD_PENDING</span></article><article class="project-entry"><span class="project-number">04</span><div><h3>WEB / GAME PROJECTS</h3><p>PROJECT RECORD // DESCRIPTION AND STACK DATA TO BE ADDED.</p></div><span class="project-entry-status">RECORD_PENDING</span></article></div>
+</div>
+</section>
+</section>
+<style>
+  .portfolio-hero { position: fixed; inset: 0; z-index: 100; overflow: auto; background: var(--surface); color: var(--on-surface); opacity: 0; pointer-events: none; transition: opacity 650ms ease; font-family: 'Geist', sans-serif; }
+  .portfolio-hero.is-visible { opacity: 1; pointer-events: auto; }
+  .hero-grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(to right,var(--grid-major) 1px,transparent 1px),linear-gradient(to bottom,var(--grid-major) 1px,transparent 1px),linear-gradient(to right,var(--grid-minor) 1px,transparent 1px),linear-gradient(to bottom,var(--grid-minor) 1px,transparent 1px); background-size: 80px 80px,80px 80px,16px 16px,16px 16px; }
+  .hero-frame { position: relative; min-height: 100%; max-width: 1600px; margin: 0 auto; padding: 40px 48px 32px; display: flex; flex-direction: column; }
+  .hero-crop { position: absolute; width: 18px; height: 18px; border-color: var(--accent); border-style: solid; }
+  .hero-crop-tl { top: 24px; left: 32px; border-width: 2px 0 0 2px; } .hero-crop-tr { top: 24px; right: 32px; border-width: 2px 2px 0 0; } .hero-crop-bl { bottom: 24px; left: 32px; border-width: 0 0 2px 2px; } .hero-crop-br { right: 32px; bottom: 24px; border-width: 0 2px 2px 0; }
+  .hero-hud { display: flex; justify-content: space-between; align-items: center; color: var(--hud-text); font: 500 10px/1.4 'JetBrains Mono',monospace; letter-spacing: .13em; text-transform: uppercase; }
+  .hero-hud-controls, .theme-control { display: flex; align-items: center; gap: 14px; }
+  .theme-control { gap: 7px; }
+  .theme-toggle { position: relative; display: inline-flex; padding: 0; border: 1px solid var(--border-subtle); border-radius: 0; background: transparent; color: var(--on-surface-secondary); font: 500 10px/1 'JetBrains Mono',monospace; letter-spacing: .1em; text-transform: uppercase; transition: color 120ms linear, border-color 120ms linear, background-color 120ms linear; }
+  .theme-toggle::after { content: ''; position: absolute; inset: 2px -3px -3px 2px; border: 1px solid var(--focus-ring); opacity: 0; pointer-events: none; transition: opacity 120ms linear; }
+  .theme-toggle:focus-visible::after, .theme-toggle:hover::after { opacity: 1; }
+  .theme-toggle span { position: relative; padding: 7px 9px 6px; }
+  .theme-toggle span:first-child { clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%); }
+  .theme-toggle span:last-child { clip-path: polygon(4px 0, 100% 0, 100% 100%, 0 100%, 0 4px); }
+  .theme-toggle span[data-active="true"] { color: var(--on-surface); border-bottom: 1px solid var(--accent); background-color: var(--active-surface); }
+  .theme-toggle:focus-visible { outline: 1px solid var(--focus-ring); outline-offset: 2px; }
+  .hero-hud b { margin-left: 24px; font-weight: 500; } .hero-status-node,.hero-pulse-node { display: inline-block; width: 6px; height: 6px; margin-right: 8px; background: var(--accent); } .hero-pulse-node { margin: 0 0 0 8px; animation: hero-pulse 1.6s steps(2,end) infinite; }
+  .hero-layout { flex: 1; display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 32px; align-items: center; padding: 10vh 4vw 8vh; }
+  .hero-index { grid-column: span 1; align-self: start; padding-top: 7px; color: var(--accent); font: 500 10px/1.5 'JetBrains Mono',monospace; letter-spacing: .12em; } .hero-index-number { display: block; font-size: 30px; letter-spacing: 0; } .hero-index-rule { display: block; width: 32px; border-top: 1px solid var(--accent); margin: 14px 0; } .hero-index-label { color: var(--on-surface-muted); }
+  .hero-copy { grid-column: 2/span 7; position: relative; } .hero-kicker { margin: 0 0 22px; color: var(--accent); font: 500 11px/1.4 'JetBrains Mono',monospace; letter-spacing: .14em; } .hero-copy h1 { position: relative; margin: 0; font: 800 clamp(76px,11vw,176px)/.78 'Barlow Condensed',sans-serif; letter-spacing: .015em; text-transform: uppercase; } .hero-copy h1 em { color: transparent; -webkit-text-stroke: 1px var(--on-surface); font-style: normal; }
+  .hero-datum { display: flex; align-items: center; gap: 10px; width: 78%; margin: 32px 0 22px; color: var(--accent); font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .12em; } .hero-datum span:first-child,.hero-datum span:last-child { flex: 1; border-top: 1px solid var(--accent); } .hero-role { margin: 0 0 16px; color: var(--on-surface-secondary); font: 700 clamp(20px,2.2vw,32px)/1 'Barlow Condensed',sans-serif; letter-spacing: .04em; text-transform: uppercase; } .hero-positioning { max-width: 500px; margin: 0; font: 400 18px/1.55 'Geist',sans-serif; } .hero-actions { display: flex; gap: 18px; margin-top: 28px; } .hero-actions a { position: relative; display: inline-flex; align-items: center; gap: 22px; padding: 11px 13px; color: var(--on-surface); border: 1px solid var(--border); font: 600 10px 'JetBrains Mono',monospace; letter-spacing: .1em; text-decoration: none; transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease; } .hero-actions a::after { content: ''; position: absolute; inset: 2px -3px -3px 2px; border: 1px solid var(--focus-ring); opacity: 0; pointer-events: none; transition: opacity 120ms ease; } .hero-actions a:hover, .hero-actions a:focus-visible { color: var(--accent); background-color: var(--hover-surface); } .hero-actions a:hover::after, .hero-actions a:focus-visible::after { opacity: 1; } .hero-actions a:focus-visible { outline: 1px solid var(--focus-ring); outline-offset: 2px; } .hero-actions b { color: var(--accent); font-weight: 500; } .hero-meta { display: flex; gap: 28px; margin-top: 28px; color: var(--on-surface-muted); font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .1em; }
+  .hero-inspector { grid-column: 10/span 3; border: 1px solid var(--border-subtle); padding: 20px; min-height: 200px; position: relative; } .hero-inspector::before { content: ''; position: absolute; inset: 4px -5px -5px 4px; border: 1px solid var(--accent); pointer-events: none; z-index: -1; opacity: 0; transition: opacity 180ms ease; } .hero-inspector:hover::before { opacity: 1; } .hero-inspector-head { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; color: var(--on-surface-muted); font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .12em; } .hero-inspector-head strong { color: var(--accent); font-weight: 500; } .hero-spec-list { display: grid; gap: 15px; margin: 22px 0 20px; } .hero-spec-list div { display: flex; flex-direction: column; gap: 5px; } .hero-spec-list span { color: var(--on-surface-muted); font: 500 8px 'JetBrains Mono',monospace; letter-spacing: .12em; } .hero-spec-list strong { color: var(--on-surface); font: 600 10px 'JetBrains Mono',monospace; letter-spacing: .06em; } .hero-coordinate { color: var(--accent); font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .08em; }
+  .hero-links { align-self: center; width: min(760px,100%); display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--border); } .hero-links a { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 16px 12px; color: var(--on-surface); border-right: 1px solid var(--border-subtle); font: 600 12px 'JetBrains Mono',monospace; letter-spacing: .1em; text-decoration: none; } .hero-links a:first-child { border-left: 1px solid var(--border-subtle); } .hero-links a::after { content: ''; position: absolute; inset: 2px -2px -2px 2px; border: 1px solid var(--accent); opacity: 0; transition: opacity 180ms ease; pointer-events: none; } .hero-links a:hover::after { opacity: 1; } .hero-links a span,.hero-links a b { color: var(--accent); font-weight: 500; } .hero-links a:hover { color: var(--accent); background-color: var(--hover-surface); }
+  .hero-reveal { opacity: 0; transform: translateY(18px) scale(.98); } .portfolio-hero.is-visible .hero-reveal { animation: hero-draft-in 700ms cubic-bezier(.34,1.56,.64,1) var(--reveal-delay) forwards; } @keyframes hero-draft-in { to { opacity: 1; transform: translateY(0) scale(1); } } @keyframes hero-pulse { 50% { opacity: .25; } }
+  @media (max-width: 1279px) { .hero-frame { padding-inline: 40px; } .hero-layout { grid-template-columns: repeat(8,minmax(0,1fr)); gap: 24px; } .hero-copy { grid-column: 2/span 5; } .hero-inspector { grid-column: 7/span 2; } }
+  @media (max-width: 767px) { .hero-frame { min-height: 680px; padding: 32px 24px 28px; } .hero-crop-tl { top: 16px; left: 16px; } .hero-crop-tr { top: 16px; right: 16px; } .hero-crop-bl { bottom: 16px; left: 16px; } .hero-crop-br { right: 16px; bottom: 16px; } .hero-hud { font-size: 8px; } .hero-hud b { display: none; } .hero-hud-controls { gap: 7px; } .theme-control > span:first-child { display: none; } .hero-layout { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; padding: 9vh 0 6vh; align-content: center; } .hero-index { grid-column: span 1; } .hero-copy { grid-column: 1/-1; margin-top: 28px; } .hero-copy h1 { font-size: clamp(76px,25vw,120px); } .hero-kicker { font-size: 9px; line-height: 1.7; } .hero-role { font-size: 25px; line-height: 1.05; } .hero-positioning { font-size: 16px; } .hero-actions { flex-direction: column; gap: 10px; } .hero-actions a { justify-content: space-between; } .hero-inspector { grid-column: 1/-1; margin-top: 38px; min-height: 0; padding: 16px; } .hero-meta { gap: 12px; flex-wrap: wrap; } .hero-links { grid-template-columns: 1fr; } .hero-links a,.hero-links a:first-child { border-left: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); } .hero-hud-bottom { margin-top: 20px; } }
+  .about-section { position: relative; min-height: 100vh; background: var(--surface); color: var(--on-surface); border-top: 1px solid var(--border); }
+  .about-inner { max-width: 1600px; margin: 0 auto; padding: 96px 48px 120px; display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 32px; }
+  .about-heading { grid-column: 1/span 4; align-self: start; }
+  .about-section-code, .about-heading-note, .about-label, .about-panel-head, .about-profile dt, .about-journey-grid span, .about-skill-grid span { color: var(--accent); font: 500 9px/1.5 'JetBrains Mono',monospace; letter-spacing: .13em; text-transform: uppercase; }
+  .about-heading h2 { margin: 20px 0 0; font: 800 clamp(64px,8vw,120px)/.8 'Barlow Condensed',sans-serif; letter-spacing: .015em; text-transform: uppercase; }
+  .about-heading h2 em { color: transparent; -webkit-text-stroke: 1px var(--on-surface); font-style: normal; }
+  .about-heading-note { display: block; margin-top: 28px; color: var(--on-surface-muted); }
+  .about-intro { grid-column: 2/span 6; align-self: end; max-width: 570px; padding-bottom: 4px; }
+  .about-intro p { margin: 18px 0 0; color: var(--on-surface-secondary); font: 400 18px/1.6 'Geist',sans-serif; }
+  .about-profile { grid-column: 9/span 4; border: 1px solid var(--border-subtle); padding: 20px; }
+  .about-panel-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
+  .about-panel-head strong { color: var(--on-surface-muted); font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .1em; }
+  .about-profile dl { margin: 0; }
+  .about-profile dl > div { display: grid; grid-template-columns: 1fr 1.25fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border-subtle); }
+  .about-profile dl > div:last-child { border-bottom: 0; padding-bottom: 0; }
+  .about-profile dt { color: var(--on-surface-muted); font-size: 8px; }
+  .about-profile dd { margin: 0; color: var(--on-surface); font: 600 10px/1.35 'JetBrains Mono',monospace; letter-spacing: .06em; }
+  .about-journey { grid-column: 2/span 7; margin-top: 48px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .about-journey-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 28px; }
+  .about-journey-grid > div { display: flex; flex-direction: column; gap: 9px; padding: 20px 0; border-bottom: 1px solid var(--border-subtle); }
+  .about-journey-grid strong, .about-skill-grid strong { color: var(--on-surface); font: 700 18px/1.05 'Barlow Condensed',sans-serif; letter-spacing: .04em; text-transform: uppercase; }
+  .about-journey-grid span, .about-skill-grid span { color: var(--on-surface-muted); font-size: 8px; }
+  .about-skills { grid-column: 9/span 4; margin-top: 48px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .about-skill-grid { display: grid; gap: 0; }
+  .about-skill-grid > div { display: flex; flex-direction: column; gap: 9px; padding: 17px 0; border-bottom: 1px solid var(--border-subtle); }
+  .about-skill-grid > div:last-child { border-bottom: 0; }
+  .about-skill-grid strong { font-size: 16px; }
+  .about-reveal { opacity: 0; transform: translateY(12px); }
+  .portfolio-hero.is-visible .about-reveal { animation: about-draft-in 520ms ease-out var(--about-delay, 120ms) forwards; }
+  .about-intro { --about-delay: 180ms; } .about-profile { --about-delay: 260ms; } .about-journey { --about-delay: 340ms; } .about-skills { --about-delay: 420ms; }
+  @keyframes about-draft-in { to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 1279px) { .about-inner { grid-template-columns: repeat(8,minmax(0,1fr)); gap: 24px; padding-inline: 40px; } .about-heading { grid-column: 1/span 3; } .about-intro { grid-column: 1/span 4; } .about-profile { grid-column: 6/span 3; } .about-journey { grid-column: 1/span 5; } .about-skills { grid-column: 6/span 3; } }
+  @media (max-width: 767px) { .about-inner { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; padding: 80px 24px 100px; } .about-heading, .about-intro, .about-profile, .about-journey, .about-skills { grid-column: 1/-1; } .about-heading h2 { font-size: clamp(64px,20vw,92px); } .about-heading-note { margin-top: 22px; } .about-intro { margin-top: 52px; } .about-intro p { font-size: 16px; } .about-profile { margin-top: 44px; padding: 16px; } .about-journey, .about-skills { margin-top: 52px; } .about-journey-grid { grid-template-columns: 1fr; } .about-journey-grid strong, .about-skill-grid strong { font-size: 17px; } }
+  @media (prefers-reduced-motion: reduce) { .about-reveal, .portfolio-hero.is-visible .about-reveal { opacity: 1; transform: none; animation: none; } }
+  .projects-section { position: relative; min-height: 100vh; background: var(--surface); color: var(--on-surface); border-top: 1px solid var(--border); }
+  .projects-inner { max-width: 1600px; margin: 0 auto; padding: 112px 48px 140px; display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 32px; }
+  .projects-heading { grid-column: 1/span 3; align-self: start; }
+  .projects-section-code, .projects-heading > p, .project-entry-head, .project-type, .project-stack span, .project-entry-foot, .project-archive-head, .project-entry-status { color: var(--accent); font: 500 9px/1.5 'JetBrains Mono',monospace; letter-spacing: .13em; text-transform: uppercase; }
+  .projects-heading h2 { margin: 20px 0 0; font: 800 clamp(68px,8vw,124px)/.8 'Barlow Condensed',sans-serif; letter-spacing: .015em; text-transform: uppercase; }
+  .projects-heading h2 em { color: transparent; -webkit-text-stroke: 1px var(--on-surface); font-style: normal; }
+  .projects-heading > p { margin-top: 28px; color: var(--on-surface-muted); }
+  .project-featured { grid-column: 4/span 8; border: 1px solid var(--border); padding: 22px; background: var(--surface-secondary); position: relative; }
+  .project-featured::before { content: ''; position: absolute; inset: 5px -5px -5px 5px; border: 1px solid var(--accent); opacity: 0; pointer-events: none; transition: opacity 140ms ease; }
+  .project-featured:hover::before { opacity: 1; }
+  .project-entry-head, .project-archive-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border-subtle); }
+  .project-entry-head strong { color: var(--on-surface); font: 600 11px 'JetBrains Mono',monospace; letter-spacing: .1em; }
+  .project-featured-body { display: grid; grid-template-columns: minmax(0,1fr) 220px; gap: 32px; align-items: center; padding: 50px 12px 56px; }
+  .project-type { color: var(--on-surface-muted); }
+  .project-featured-body > div { min-width: 0; max-width: 100%; }
+  .project-featured h3 { margin: 16px 0 20px; font: 800 clamp(48px,6vw,92px)/.8 'Barlow Condensed',sans-serif; letter-spacing: .015em; overflow-wrap: anywhere; }
+  .project-description { max-width: 510px; margin: 0; color: var(--on-surface-secondary); font: 400 18px/1.55 'Geist',sans-serif; }
+  .project-stack { display: flex; flex-direction: column; gap: 8px; margin-top: 28px; }
+  .project-stack strong { color: var(--on-surface); font: 600 11px/1.6 'JetBrains Mono',monospace; letter-spacing: .06em; overflow-wrap: anywhere; }
+  .project-featured-mark { display: flex; flex-direction: column; align-items: center; gap: 18px; color: var(--accent); text-align: center; }
+  .project-featured-mark span { font: 800 150px/.8 'Barlow Condensed',sans-serif; }
+  .project-featured-mark i { display: block; width: 100%; border-top: 1px solid var(--accent); }
+  .project-featured-mark b { font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .12em; }
+  .project-entry-foot { display: flex; justify-content: space-between; gap: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); color: var(--on-surface-muted); }
+  .project-archive { grid-column: 4/span 8; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .project-archive-head strong { color: var(--on-surface-muted); font: 500 9px 'JetBrains Mono',monospace; letter-spacing: .1em; }
+  .project-entry { display: grid; grid-template-columns: 80px 1fr 140px; align-items: center; gap: 24px; padding: 24px 12px; border-bottom: 1px solid var(--border-subtle); transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease; }
+  .project-entry:hover { background: var(--hover-surface); }
+  .project-number { color: var(--accent); font: 800 48px/.8 'Barlow Condensed',sans-serif; }
+  .project-entry h3 { margin: 0 0 8px; font: 700 26px/1 'Barlow Condensed',sans-serif; letter-spacing: .03em; text-transform: uppercase; }
+  .project-entry p { margin: 0; color: var(--on-surface-muted); font: 500 9px/1.5 'JetBrains Mono',monospace; letter-spacing: .08em; }
+  .project-entry-status { justify-self: end; color: var(--on-surface-muted); font-size: 8px; text-align: right; }
+  .project-reveal { opacity: 0; transform: translateY(12px); }
+  .portfolio-hero.is-visible .project-reveal { animation: project-draft-in 520ms ease-out var(--project-delay, 180ms) forwards; }
+  .project-featured { --project-delay: 180ms; } .project-archive { --project-delay: 300ms; }
+  @keyframes project-draft-in { to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 1279px) { .projects-inner { grid-template-columns: repeat(8,minmax(0,1fr)); gap: 24px; padding-inline: 40px; } .projects-heading { grid-column: 1/span 2; } .project-featured, .project-archive { grid-column: 3/span 6; } .project-featured-body { grid-template-columns: 1fr 160px; } .project-featured-mark span { font-size: 120px; } }
+  @media (max-width: 767px) { .projects-inner { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; padding: 80px 24px 100px; } .projects-heading, .project-featured, .project-archive { grid-column: 1/-1; min-width: 0; } .projects-heading h2 { font-size: clamp(68px,20vw,94px); } .project-featured { margin-top: 52px; padding: 16px; } .project-featured-body { grid-template-columns: minmax(0,1fr); gap: 30px; padding: 34px 0 38px; } .project-featured-body > div { min-width: 0; } .project-featured h3 { font-size: 58px; } .project-description { font-size: 16px; } .project-featured-mark { align-items: flex-start; } .project-featured-mark span { font-size: 88px; } .project-entry-foot { flex-direction: column; gap: 8px; } .project-archive { margin-top: 52px; } .project-entry { grid-template-columns: 48px minmax(0,1fr); gap: 16px; padding: 22px 0; } .project-entry-status { grid-column: 2; justify-self: start; text-align: left; } .project-number { font-size: 38px; } .project-entry h3 { font-size: 23px; } }
+  @media (prefers-reduced-motion: reduce) { .project-reveal, .portfolio-hero.is-visible .project-reveal { opacity: 1; transform: none; animation: none; } }
+</style>
+<script>
+/**
+ * ARIN PATEL — KINETIC WEB LOADING INTRO (EXACT 5.0-SECOND SEQUENCE)
+ * 
+ * Timeline Architecture:
+ * 0.0s – 1.5s // POP IN:
+ *   - Blueprint nodes and hairline crosshairs pop in with bouncy spring overshoot.
+ *   - Line 1 ("ARIN PATEL") letters pop in sequentially with snappy overshoot bounce (0.0s - 0.8s)
+ *   - Line 2 ("NO FINAL VERSION.") pops in directly after with quicker rapid stagger (0.8s - 1.4s)
+ * 1.5s – 2.5s // HOLD & DIM:
+ *   - Both lines sit fully formed and solid black.
+ *   - Then smoothly dim down together into a faint ghosted silhouette (~0.15 opacity), soft warm hum drone.
+ *   - Blue HUD nodes and datum lines softly fade to 0.
+ * 2.5s – 3.5s // TRANSITION:
+ *   - Camera pushes forward in accelerating 3D dolly zoom into the center of the frame.
+ *   - Radial light streak tunnel lines rush past the viewport + accelerating wind noise whoosh.
+ * 3.5s – 5.0s // ENTER / RESOLVE:
+ *   - Soft bright white flash bloom at 3.5s that clears smoothly.
+ *   - Settles on a clean, calm, pristine empty light grid canvas poised for webpage loading.
+ *   - Short crystalline shimmer / chime harmonic impact decaying into ambient stillness.
+ */
+
+const TEXT_LINE_1 = "ARIN PATEL";
+const TEXT_LINE_2 = "NO FINAL VERSION.";
+
+// Technical HUD micro node positions (SVG viewbox 1200x675)
+const HUD_NODES = [
+  { x: 190, y: 175, delay: 50, type: 'cross' },
+  { x: 340, y: 175, delay: 120, type: 'square' },
+  { x: 600, y: 160, delay: 180, type: 'marker' },
+  { x: 860, y: 175, delay: 240, type: 'square' },
+  { x: 1010, y: 175, delay: 300, type: 'cross' },
+  { x: 240, y: 490, delay: 150, type: 'bracket-l' },
+  { x: 600, y: 500, delay: 260, type: 'marker' },
+  { x: 960, y: 490, delay: 380, type: 'bracket-r' },
+  { x: 440, y: 420, delay: 420, type: 'dot' },
+  { x: 760, y: 420, delay: 460, type: 'dot' }
+];
+
+// Spring Overshoot formula: cubic-bezier(0.34, 1.56, 0.64, 1) approximation
+function springOvershoot(t) {
+  t = Math.max(0, Math.min(1, t));
+  const c4 = (2 * Math.PI) / 3;
+  return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+}
+
+function easeInCubic(t) {
+  return t * t * t;
+}
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+// DOM References
+const dollyScene = document.getElementById('dolly-scene');
+const hudHeader = document.getElementById('hud-header');
+const hudBottomInfo = document.getElementById('hud-bottom-info');
+const hudGuides = document.getElementById('hud-guides');
+const hudCornerMarks = document.getElementById('hud-corner-marks');
+const microNodesLayer = document.getElementById('micro-nodes-layer');
+const typographyContainer = document.getElementById('typography-container');
+const line1El = document.getElementById('line-1');
+const line2El = document.getElementById('line-2');
+const streakCanvas = document.getElementById('streak-canvas');
+const streakCtx = streakCanvas.getContext('2d');
+const flashOverlay = document.getElementById('flash-overlay');
+const resolvedView = document.getElementById('resolved-view');
+const timerDisplay = document.getElementById('timer-display');
+const statusLabel = document.getElementById('status-label');
+
+// Initialize DOM letter spans for both lines
+function setupTypographyElements() {
+  line1El.innerHTML = '';
+  TEXT_LINE_1.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'inline-block glyph-l1 will-change-transform';
+    span.textContent = char;
+    if (char === ' ') {
+      span.style.width = '0.32em';
+    }
+    span.style.transform = 'scale(0)';
+    span.style.opacity = '0';
+    line1El.appendChild(span);
+  });
+
+  line2El.innerHTML = '';
+  TEXT_LINE_2.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'inline-block glyph-l2 will-change-transform';
+    span.textContent = char;
+    if (char === ' ') {
+      span.style.width = '0.45em';
+    }
+    span.style.transform = 'scale(0)';
+    span.style.opacity = '0';
+    line2El.appendChild(span);
+  });
+}
+setupTypographyElements();
+
+// ========================================================
+// PROCEDURAL WEB AUDIO SYNTHESIZER
+// ========================================================
+class WebIntroAudio {
+  constructor() {
+    this.ctx = null;
+    this.enabled = true;
+    this.humOsc = null;
+    this.humGain = null;
+    this.riserOsc = null;
+    this.riserGain = null;
+    this.riserNoise = null;
+    this.riserNoiseGain = null;
+    this.ambientOsc = null;
+    this.ambientGain = null;
+  }
+
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) this.ctx = new AudioCtx();
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+  }
+
+  // Line 1: Playful rising pop/blip per letter
+  playLine1Blip(index) {
+    if (!this.enabled || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      const baseFreq = 340 + (index * 62); // ascending sequence
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(baseFreq, now);
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.5, now + 0.065);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.085);
+
+      // Delicate mechanical top click
+      const click = this.ctx.createOscillator();
+      const clickGain = this.ctx.createGain();
+      click.type = 'triangle';
+      click.frequency.setValueAtTime(1600 + (index * 80), now);
+      clickGain.gain.setValueAtTime(0.05, now);
+      clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+      click.connect(clickGain);
+      clickGain.connect(this.ctx.destination);
+      click.start(now);
+      click.stop(now + 0.022);
+    } catch(e) {}
+  }
+
+  // Line 2: Softer, rapid crisp micro-ticks
+  playLine2Tick(index) {
+    if (!this.enabled || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      const freq = 680 + (index * 35);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.25, now + 0.04);
+
+      gain.gain.setValueAtTime(0.09, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.048);
+    } catch(e) {}
+  }
+
+  // 1.5s - 2.5s: Low warm sub-harmonic hum as typography dims
+  startDimHum() {
+    if (!this.enabled || !this.ctx || this.humOsc) return;
+    try {
+      const now = this.ctx.currentTime;
+      this.humOsc = this.ctx.createOscillator();
+      this.humGain = this.ctx.createGain();
+
+      this.humOsc.type = 'sine';
+      this.humOsc.frequency.setValueAtTime(75, now);
+      this.humOsc.frequency.linearRampToValueAtTime(52, now + 1.0);
+
+      this.humGain.gain.setValueAtTime(0.001, now);
+      this.humGain.gain.linearRampToValueAtTime(0.08, now + 0.3);
+      this.humGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.0);
+
+      this.humOsc.connect(this.humGain);
+      this.humGain.connect(this.ctx.destination);
+      this.humOsc.start(now);
+      this.humOsc.stop(now + 1.05);
+    } catch(e) {}
+  }
+
+  // 2.5s - 3.5s: Fast rising filtered noise whoosh/riser with dolly push
+  startDollyRiser() {
+    if (!this.enabled || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+
+      // Pitch sweep
+      this.riserOsc = this.ctx.createOscillator();
+      this.riserGain = this.ctx.createGain();
+      this.riserOsc.type = 'sawtooth';
+      this.riserOsc.frequency.setValueAtTime(85, now);
+      this.riserOsc.frequency.exponentialRampToValueAtTime(840, now + 1.0);
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(260, now);
+      filter.frequency.exponentialRampToValueAtTime(3600, now + 1.0);
+
+      this.riserGain.gain.setValueAtTime(0.01, now);
+      this.riserGain.gain.exponentialRampToValueAtTime(0.25, now + 0.96);
+      this.riserGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.02);
+
+      this.riserOsc.connect(filter);
+      filter.connect(this.riserGain);
+      this.riserGain.connect(this.ctx.destination);
+      this.riserOsc.start(now);
+      this.riserOsc.stop(now + 1.03);
+
+      // Airy wind noise whoosh
+      const bufferSize = Math.floor(this.ctx.sampleRate * 1.05);
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      this.riserNoise = this.ctx.createBufferSource();
+      this.riserNoise.buffer = buffer;
+
+      const noiseFilter = this.ctx.createBiquadFilter();
+      noiseFilter.type = 'bandpass';
+      noiseFilter.Q.value = 2.8;
+      noiseFilter.frequency.setValueAtTime(400, now);
+      noiseFilter.frequency.exponentialRampToValueAtTime(5000, now + 1.0);
+
+      this.riserNoiseGain = this.ctx.createGain();
+      this.riserNoiseGain.gain.setValueAtTime(0.01, now);
+      this.riserNoiseGain.gain.linearRampToValueAtTime(0.18, now + 0.95);
+      this.riserNoiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.02);
+
+      this.riserNoise.connect(noiseFilter);
+      noiseFilter.connect(this.riserNoiseGain);
+      this.riserNoiseGain.connect(this.ctx.destination);
+      this.riserNoise.start(now);
+      this.riserNoise.stop(now + 1.03);
+    } catch(e) {}
+  }
+
+  // 3.5s - 5.0s: Crystalline chime harmonic impact & soothing ambient decay
+  playFlashImpactAndSettle() {
+    if (!this.enabled || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+
+      // Bright harmonic chime chord: D major / high overtone shimmer
+      const chord = [587.33, 739.99, 880.00, 1174.66, 1760.00];
+      chord.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+
+        const vol = 0.09 / (idx + 1);
+        gain.gain.setValueAtTime(vol, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 1.45);
+      });
+
+      // Warm grounding thud
+      const sub = this.ctx.createOscillator();
+      const subGain = this.ctx.createGain();
+      sub.type = 'sine';
+      sub.frequency.setValueAtTime(95, now);
+      sub.frequency.exponentialRampToValueAtTime(40, now + 0.35);
+
+      subGain.gain.setValueAtTime(0.20, now);
+      subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+
+      sub.connect(subGain);
+      subGain.connect(this.ctx.destination);
+      sub.start(now);
+      sub.stop(now + 0.42);
+
+      // Calming ambient room tone
+      this.ambientOsc = this.ctx.createOscillator();
+      this.ambientGain = this.ctx.createGain();
+      this.ambientOsc.type = 'sine';
+      this.ambientOsc.frequency.setValueAtTime(220, now);
+
+      this.ambientGain.gain.setValueAtTime(0.001, now);
+      this.ambientGain.gain.linearRampToValueAtTime(0.035, now + 0.25);
+      this.ambientGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.45);
+
+      this.ambientOsc.connect(this.ambientGain);
+      this.ambientGain.connect(this.ctx.destination);
+      this.ambientOsc.start(now);
+      this.ambientOsc.stop(now + 1.5);
+    } catch(e) {}
+  }
+
+  stopAll() {
+    try {
+      if (this.humOsc) { this.humOsc.stop(); this.humOsc.disconnect(); this.humOsc = null; }
+      if (this.riserOsc) { this.riserOsc.stop(); this.riserOsc.disconnect(); this.riserOsc = null; }
+      if (this.riserNoise) { this.riserNoise.stop(); this.riserNoise.disconnect(); this.riserNoise = null; }
+      if (this.ambientOsc) { this.ambientOsc.stop(); this.ambientOsc.disconnect(); this.ambientOsc = null; }
+    } catch(e) {}
+  }
+}
+
+const audio = new WebIntroAudio();
+
+// ========================================================
+// TIMELINE ENGINE (5.0 SECONDS EXACT)
+// ========================================================
+const TOTAL_DURATION = 5000;
+const T_PHASE_1_END = 1500; // 0.0s – 1.5s: POP IN
+const T_PHASE_2_END = 2500; // 1.5s – 2.5s: HOLD & DIM
+const T_PHASE_3_END = 3500; // 2.5s – 3.5s: TRANSITION (DOLLY ZOOM)
+const T_PHASE_4_END = 5000; // 3.5s – 5.0s: ENTER / RESOLVE
+
+let isRunning = false;
+let animReqId = null;
+let startTime = null;
+
+const poppedL1 = new Set();
+const poppedL2 = new Set();
+let dimHumTriggered = false;
+let dollyRiserTriggered = false;
+let flashImpactTriggered = false;
+
+const glyphsL1 = line1El.querySelectorAll('.glyph-l1');
+const glyphsL2 = line2El.querySelectorAll('.glyph-l2');
+
+function formatTimecode(ms) {
+  const clamped = Math.min(ms, TOTAL_DURATION);
+  const totalSeconds = clamped / 1000;
+  const secs = Math.floor(totalSeconds);
+  const frac = Math.floor((clamped % 1000) / 10);
+  return `00:${secs.toString().padStart(2, '0')}.${frac.toString().padStart(2, '0')}s`;
+}
+
+function resetVisuals() {
+  if (animReqId) cancelAnimationFrame(animReqId);
+  isRunning = false;
+  poppedL1.clear();
+  poppedL2.clear();
+  dimHumTriggered = false;
+  dollyRiserTriggered = false;
+  flashImpactTriggered = false;
+  audio.stopAll();
+
+  // Reset 3D Dolly Transform & filters
+  dollyScene.style.transform = 'translate3d(0, 0, 0) scale(1)';
+  dollyScene.style.filter = 'none';
+  dollyScene.style.opacity = '1';
+
+  // Typography container
+  typographyContainer.style.opacity = '1';
+
+  // Reset all Line 1 & Line 2 characters
+  glyphsL1.forEach(el => {
+    el.style.transform = 'scale(0)';
+    el.style.opacity = '0';
+  });
+  glyphsL2.forEach(el => {
+    el.style.transform = 'scale(0)';
+    el.style.opacity = '0';
+  });
+
+  // Canvas & overlays
+  streakCtx.clearRect(0, 0, streakCanvas.width, streakCanvas.height);
+  streakCanvas.style.opacity = '0';
+  flashOverlay.style.opacity = '0';
+  resolvedView.style.opacity = '0';
+
+  // Restore HUD Chrome
+  hudHeader.style.opacity = '1';
+  hudBottomInfo.style.opacity = '1';
+  hudGuides.setAttribute('opacity', '0');
+  hudCornerMarks.style.opacity = '1';
+
+  timerDisplay.innerText = '00:00.00s';
+  statusLabel.innerText = 'INITIALIZING 5.0S SEQUENCE...';
+  microNodesLayer.innerHTML = '';
+}
+
+function startAnimation() {
+  resetVisuals();
+  audio.init();
+  isRunning = true;
+  startTime = performance.now();
+  requestAnimationFrame(loop);
+}
+
+// Generate radial light streak tunnel lines
+function renderSpeedStreaks(progress) {
+  streakCtx.clearRect(0, 0, streakCanvas.width, streakCanvas.height);
+  if (progress <= 0) return;
+
+  const cx = 600;
+  const cy = 337.5;
+  const numStreaks = 54;
+  const baseLen = 45 + progress * 280;
+
+  streakCtx.save();
+  for (let i = 0; i < numStreaks; i++) {
+    const angle = (i / numStreaks) * (Math.PI * 2) + (progress * 0.45);
+    const distMin = 25 + (progress * 190);
+    const distMax = distMin + baseLen * (0.6 + (i % 5) * 0.25);
+
+    const x1 = cx + Math.cos(angle) * distMin;
+    const y1 = cy + Math.sin(angle) * distMin;
+    const x2 = cx + Math.cos(angle) * distMax;
+    const y2 = cy + Math.sin(angle) * distMax;
+
+    streakCtx.beginPath();
+    streakCtx.moveTo(x1, y1);
+    streakCtx.lineTo(x2, y2);
+    streakCtx.lineWidth = 1 + (i % 3) * 1.25;
+    streakCtx.strokeStyle = `rgba(47, 92, 255, ${(0.22 + progress * 0.58).toFixed(2)})`;
+    streakCtx.stroke();
+  }
+  streakCtx.restore();
+}
+
+function loop(now) {
+  if (!isRunning) return;
+  const elapsed = now - startTime;
+
+  // Realtime Timecode Display
+  timerDisplay.innerText = formatTimecode(elapsed);
+
+  // ========================================================
+  // PHASE 1: 0.0s – 1.5s (POP IN)
+  // Blueprint nodes spring up + Line 1 pop-in (0-0.8s) + Line 2 pop-in (0.8-1.4s)
+  // ========================================================
+  if (elapsed < T_PHASE_1_END) {
+    statusLabel.innerText = 'POP-IN SYNTHESIS // BOUNCY OVERSHOOT [0.0S-1.5S]';
+    hudGuides.setAttribute('opacity', Math.min(1, elapsed / 450).toFixed(2));
+
+    // 1A. Blueprint UI micro nodes pop up with quick spring overshoot
+    let nodeMarkup = '';
+    HUD_NODES.forEach(n => {
+      if (elapsed >= n.delay) {
+        const pNode = Math.min(1, (elapsed - n.delay) / 360);
+        const scaleNode = springOvershoot(pNode);
+
+        if (n.type === 'cross') {
+          nodeMarkup += `
+            <g transform="translate(${n.x}, ${n.y}) scale(${scaleNode})">
+              <line x1="-7" y1="0" x2="7" y2="0" stroke="var(--accent)" stroke-width="1" />
+              <line x1="0" y1="-7" x2="0" y2="7" stroke="var(--accent)" stroke-width="1" />
+              <circle cx="0" cy="0" r="1.5" fill="var(--accent)" />
+            </g>
+          `;
+        } else if (n.type === 'square') {
+          nodeMarkup += `
+            <g transform="translate(${n.x}, ${n.y}) scale(${scaleNode})">
+              <rect x="-3" y="-3" width="6" height="6" fill="none" stroke="var(--accent)" stroke-width="1" />
+              <rect x="-1" y="-1" width="2" height="2" fill="var(--accent)" />
+            </g>
+          `;
+        } else if (n.type === 'bracket-l') {
+          nodeMarkup += `
+            <g transform="translate(${n.x}, ${n.y}) scale(${scaleNode})">
+              <path d="M 0 -8 L -6 -8 L -6 8 L 0 8" fill="none" stroke="var(--accent)" stroke-width="1.2" />
+            </g>
+          `;
+        } else if (n.type === 'bracket-r') {
+          nodeMarkup += `
+            <g transform="translate(${n.x}, ${n.y}) scale(${scaleNode})">
+              <path d="M 0 -8 L 6 -8 L 6 8 L 0 8" fill="none" stroke="var(--accent)" stroke-width="1.2" />
+            </g>
+          `;
+        } else {
+          nodeMarkup += `
+            <g transform="translate(${n.x}, ${n.y}) scale(${scaleNode})">
+              <circle cx="0" cy="0" r="2" fill="var(--accent)" />
+            </g>
+          `;
+        }
+      }
+    });
+    microNodesLayer.innerHTML = nodeMarkup;
+
+    // 1B. Line 1 ("ARIN PATEL"): 0.0s – 0.8s sequential bounce pop-in
+    const l1Start = 100;
+    const l1End = 800;
+    const l1Step = (l1End - l1Start) / glyphsL1.length;
+
+    glyphsL1.forEach((el, i) => {
+      const glyphTime = l1Start + (i * l1Step);
+      if (elapsed >= glyphTime) {
+        if (!poppedL1.has(i)) {
+          poppedL1.add(i);
+          if (TEXT_LINE_1[i] !== ' ') audio.playLine1Blip(i);
+        }
+        const pGlyph = Math.min(1, (elapsed - glyphTime) / 320);
+        const scaleVal = springOvershoot(pGlyph);
+        el.style.transform = `scale(${scaleVal})`;
+        el.style.opacity = '1';
+      }
+    });
+
+    // 1C. Line 2 ("NO FINAL VERSION."): 0.8s – 1.4s sequential snappy pop-in
+    const l2Start = 800;
+    const l2End = 1400;
+    const l2Step = (l2End - l2Start) / glyphsL2.length;
+
+    glyphsL2.forEach((el, i) => {
+      const glyphTime = l2Start + (i * l2Step);
+      if (elapsed >= glyphTime) {
+        if (!poppedL2.has(i)) {
+          poppedL2.add(i);
+          if (TEXT_LINE_2[i] !== ' ') audio.playLine2Tick(i);
+        }
+        const pGlyph = Math.min(1, (elapsed - glyphTime) / 280);
+        const scaleVal = springOvershoot(pGlyph);
+        el.style.transform = `scale(${scaleVal})`;
+        el.style.opacity = '1';
+      }
+    });
+  }
+
+  // ========================================================
+  // PHASE 2: 1.5s – 2.5s (HOLD & DIM)
+  // Both lines sit fully solid, then smoothly dim down together into ghost silhouette (~0.15)
+  // Surrounding blue HUD nodes and guides fade away to 0
+  // ========================================================
+  else if (elapsed >= T_PHASE_1_END && elapsed < T_PHASE_2_END) {
+    statusLabel.innerText = 'WORDMARK LOCKED // SMOOTH DIM DESCENT [1.5S-2.5S]';
+
+    if (!dimHumTriggered) {
+      dimHumTriggered = true;
+      audio.startDimHum();
+    }
+
+    // Ensure all glyphs scaled to 1
+    glyphsL1.forEach(el => { el.style.transform = 'scale(1)'; el.style.opacity = '1'; });
+    glyphsL2.forEach(el => { el.style.transform = 'scale(1)'; el.style.opacity = '1'; });
+
+    // Hold solid from 1.5s to 1.75s, then smoothly dim down from 1.75s to 2.5s
+    const dimElapsed = Math.max(0, elapsed - 1750);
+    const dimProgress = Math.min(1, dimElapsed / 750); // 1.75s to 2.5s
+    const easeDim = easeOutCubic(dimProgress);
+
+    // Dim both lines together from 1.0 down to 0.15 (soft ghosted silhouette)
+    const currentTextOpacity = (1.0 - (easeDim * 0.85)).toFixed(3);
+    typographyContainer.style.opacity = currentTextOpacity;
+
+    // Surrounding blue HUD nodes, coordinate guides, and brackets fade away into opacity 0
+    const hudFade = (1.0 - easeDim).toFixed(3);
+    hudGuides.setAttribute('opacity', hudFade);
+    microNodesLayer.setAttribute('opacity', hudFade);
+    hudHeader.style.opacity = hudFade;
+    hudBottomInfo.style.opacity = hudFade;
+    hudCornerMarks.style.opacity = hudFade;
+  }
+
+  // ========================================================
+  // PHASE 3: 2.5s – 3.5s (TRANSITION — CAMERA DOLLY ZOOM & MOTION BLUR)
+  // Accelerating forward push / dolly zoom into center (perspective + heavy translateZ scale)
+  // Dynamic radial light streaks rushing past viewport
+  // ========================================================
+  else if (elapsed >= T_PHASE_2_END && elapsed < T_PHASE_3_END) {
+    statusLabel.innerText = 'DOLLY ZOOM // TUNNEL ACCELERATION [2.5S-3.5S]';
+
+    if (!dollyRiserTriggered) {
+      dollyRiserTriggered = true;
+      audio.startDollyRiser();
+    }
+
+    const dollyProgress = (elapsed - T_PHASE_2_END) / (T_PHASE_3_END - T_PHASE_2_END); // 0 to 1
+    const easeDolly = easeInCubic(dollyProgress);
+
+    // Camera initiates accelerating forward push / dolly zoom into the center of the frame
+    const currentScale = 1 + (easeDolly * 15); // 1x -> 16x forward push
+    const zOffset = (easeDolly * 460).toFixed(1);
+    const blurPx = (easeDolly * 9).toFixed(1);
+
+    dollyScene.style.transform = `translate3d(0, 0, ${zOffset}px) scale(${currentScale.toFixed(3)})`;
+    dollyScene.style.filter = `blur(${blurPx}px)`;
+
+    // Motion streaks rushing past
+    streakCanvas.style.opacity = Math.min(1, dollyProgress * 1.6).toFixed(2);
+    renderSpeedStreaks(dollyProgress);
+  }
+
+  // ========================================================
+  // PHASE 4: 3.5s – 5.0s (ENTER / RESOLVE)
+  // Soft white flash/wipe (3.5s - 3.8s) clearing to clean pristine empty light background
+  // Crystalline shimmer / chime harmonic impact decaying into ambient stillness
+  // ========================================================
+  else if (elapsed >= T_PHASE_3_END && elapsed <= T_PHASE_4_END) {
+    statusLabel.innerText = 'RESOLVED // READY FOR WEBPAGE RENDERING [3.5S-5.0S]';
+
+    if (!flashImpactTriggered) {
+      flashImpactTriggered = true;
+      audio.playFlashImpactAndSettle();
+    }
+
+    // Hide zooming dolly viewport & streak tunnel
+    dollyScene.style.opacity = '0';
+    streakCanvas.style.opacity = '0';
+
+    // Soft luminous bright white flash/wipe (around 3.5s - 3.8s) that clears and diffuses away
+    const resolveElapsed = elapsed - T_PHASE_3_END; // 0 to 1500ms
+    const flashProgress = Math.min(1, resolveElapsed / 650); // first 650ms
+    const flashAlpha = Math.max(0, 1.0 - easeOutCubic(flashProgress));
+    flashOverlay.style.opacity = flashAlpha.toFixed(3);
+
+    // Settled calm pristine empty frame ready for webpage loading
+    if (resolveElapsed > 300) {
+      const readyProg = Math.min(1, (resolveElapsed - 300) / 600);
+      resolvedView.style.opacity = readyProg.toFixed(2);
+    }
+  }
+
+  // ========================================================
+  // COMPLETION (5.0s+)
+  // ========================================================
+  else if (elapsed > TOTAL_DURATION) {
+    timerDisplay.innerText = '00:05.00s';
+    flashOverlay.style.opacity = '0';
+    resolvedView.style.opacity = '1';
+    statusLabel.innerText = 'SEQUENCE 5.00S COMPLETED // CANVAS READY';
+    isRunning = false;
+    return;
+  }
+
+  if (isRunning) {
+    animReqId = requestAnimationFrame(loop);
+  }
+}
+
+// User interactions unlock / resume audio and allow replay click
+function ensureAudioAndRun() {
+  audio.init();
+  if (!isRunning) {
+    startAnimation();
+  }
+}
+
+window.addEventListener('pointerdown', ensureAudioAndRun, { passive: true });
+window.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' || e.key === 'Enter') {
+    e.preventDefault();
+  }
+  ensureAudioAndRun();
+});
+
+document.getElementById('stage').addEventListener('click', () => {
+  audio.init();
+  startAnimation();
+});
+
+// Auto-trigger clean intro immediately on load with audio context init
+window.addEventListener('DOMContentLoaded', () => {
+  audio.init();
+  startAnimation();
+});
+
+window.addEventListener('load', () => {
+  audio.init();
+});
+
+// Theme state defaults to light and persists the instrument switch locally.
+const themeRoot = document.documentElement;
+const themeToggle = document.getElementById('theme-toggle');
+let savedTheme = null;
+try {
+  savedTheme = localStorage.getItem('arin-theme');
+} catch (error) {}
+const initialTheme = savedTheme === 'dark' ? 'dark' : 'light';
+
+function applyTheme(theme, persist = false) {
+  themeRoot.dataset.theme = theme;
+  if (persist) {
+    try {
+      localStorage.setItem('arin-theme', theme);
+    } catch (error) {}
+  }
+  themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+  themeToggle.querySelectorAll('[data-theme-choice]').forEach(choice => {
+    choice.dataset.active = choice.dataset.themeChoice === theme ? 'true' : 'false';
+  });
+}
+
+applyTheme(initialTheme);
+themeToggle.addEventListener('pointerdown', event => event.stopPropagation());
+themeToggle.addEventListener('click', event => {
+  event.stopPropagation();
+  applyTheme(themeRoot.dataset.theme === 'dark' ? 'light' : 'dark', true);
+});
+
+// Mount the next section after the existing 5.0s intro has completed.
+window.setTimeout(() => {
+  const hero = document.getElementById('portfolio-hero');
+  const stage = document.getElementById('stage');
+  if (!hero || !stage) return;
+  hero.classList.add('is-visible');
+  stage.style.opacity = '0';
+  stage.style.pointerEvents = 'none';
+  document.body.style.overflow = 'hidden';
+}, 5150);
+</script>
+</body></html>
