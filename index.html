@@ -5326,6 +5326,25 @@
           "stage-pull",
         );
         renderProjectGrid(previousId);
+        const scrollVersion = projectRenderVersion;
+        window.setTimeout(() => {
+          if (scrollVersion !== projectRenderVersion) return;
+          const stageTarget = document.getElementById("project-stage");
+          if (!stageTarget) return;
+          if (typeof portfolioLenis !== "undefined" && portfolioLenis) {
+            if (typeof portfolioLenis.resize === "function") {
+              portfolioLenis.resize();
+            } else if (window.ScrollTrigger) {
+              window.ScrollTrigger.refresh();
+            }
+            portfolioLenis.scrollTo("#project-stage", {
+              offset: -40,
+              duration: 0.9,
+            });
+          } else {
+            stageTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 650);
       }
 
       renderProjectStage(projects[0], "stage-lock");
