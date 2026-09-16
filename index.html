@@ -163,19 +163,22 @@
         background-color: var(--accent) !important;
         box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
       }
+      #sound-hint {
+        color: var(--accent);
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+      #sound-hint.is-visible {
+        opacity: 1;
+      }
+      #sound-hint.is-expired {
+        opacity: 0;
+      }
       #line-1 {
         color: var(--on-surface) !important;
       }
       #line-2 {
         color: var(--on-surface-secondary) !important;
-      }
-      #resolve-check {
-        border: 1px solid var(--border-subtle);
-        background-color: var(--surface-secondary);
-      }
-      #resolve-check svg,
-      #resolved-view p:last-child {
-        color: var(--accent) !important;
       }
       #flash-overlay {
         background-color: var(--intro-surface) !important;
@@ -187,8 +190,6 @@
       #hud-bottom-info,
       #line-1,
       #line-2,
-      #resolved-view,
-      #resolve-check,
       #flash-overlay,
       .portfolio-hero,
       .portfolio-hero *,
@@ -273,6 +274,9 @@
               <span
                 class="hidden sm:inline-block tracking-widest font-medium text-[13px]"
                 >ASPECT: 16:9_SAFE</span
+              >
+              <span id="sound-hint" aria-live="polite"
+                >[ SOUND: TAP TO ENABLE ]</span
               >
               <span
                 class="font-bold font-mono tabular-nums tracking-wider text-[13px]"
@@ -446,38 +450,6 @@
           class="absolute inset-0 pointer-events-none z-40 opacity-0"
           id="flash-overlay"
         ></div>
-        <!-- RESOLVE STATE SCREEN (3.5s - 5.0s: Clean empty light blueprint grid settled) -->
-        <div
-          class="absolute inset-0 pointer-events-none z-30 flex flex-col items-center justify-center opacity-0 transition-opacity duration-700"
-          id="resolved-view"
-        >
-          <div class="flex flex-col items-center gap-3 text-center">
-            <div
-              class="w-9 h-9 rounded-full flex items-center justify-center shadow-sm backdrop-blur-sm"
-              id="resolve-check"
-            >
-              <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewbox="0 0 24 24"
-              >
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-            <p
-              class="font-mono text-[13px] uppercase tracking-[0.28em] font-semibold"
-            >
-              STAGE CALIBRATED
-            </p>
-            <p class="font-mono text-[13px] tracking-[0.2em] uppercase">
-              PRISTINE CANVAS READY // 5.00S COMPLETED
-            </p>
-          </div>
-        </div>
       </div>
     </main>
     <!-- HERO SECTION: mounts after the intro resolve state without changing the intro timeline -->
@@ -571,9 +543,15 @@
         >
           <a href="https://github.com/Aarin18" target="_blank" rel="noreferrer"
             ><span>[01]</span> GITHUB <b>-&gt;</b></a
-          ><a href="https://leetcode.com/u/Aarin1/" target="_blank" rel="noreferrer"
+          ><a
+            href="https://leetcode.com/u/Aarin1/"
+            target="_blank"
+            rel="noreferrer"
             ><span>[02]</span> LEETCODE <b>-&gt;</b></a
-          ><a href="https://www.linkedin.com/in/arin-patel-640468398/" target="_blank" rel="noreferrer"
+          ><a
+            href="https://www.linkedin.com/in/arin-patel-640468398/"
+            target="_blank"
+            rel="noreferrer"
             ><span>[03]</span> LINKEDIN <b>-&gt;</b></a
           >
         </nav>
@@ -582,16 +560,30 @@
           ><span>READY FOR INSPECTION <i class="hero-pulse-node"></i></span>
         </footer>
       </div>
-      <section class="about-section" id="about" aria-labelledby="about-title" data-reveal="panel" data-reveal-type="panel">
+      <section
+        class="about-section"
+        id="about"
+        aria-labelledby="about-title"
+        data-reveal="panel"
+        data-reveal-type="panel"
+      >
         <div class="about-inner">
-          <header class="about-heading about-reveal" data-reveal="heading" data-reveal-type="card">
+          <header
+            class="about-heading about-reveal"
+            data-reveal="heading"
+            data-reveal-type="card"
+          >
             <span class="about-section-code">SECTION.02 // PROFILE_SHEET</span>
             <h2 id="about-title">ABOUT<br /><em>THE BUILDER</em></h2>
             <p class="about-heading-note">
               A WORKING PROFILE / NOT A FINISHED SPEC
             </p>
           </header>
-          <div class="about-spec-sheet about-reveal" data-reveal="spec" data-reveal-type="card">
+          <div
+            class="about-spec-sheet about-reveal"
+            data-reveal="spec"
+            data-reveal-type="card"
+          >
             <span class="about-label">01 / SUBJECT_PROFILE</span>
             <div class="about-spec-row">
               <span>SUBJECT:</span>
@@ -610,29 +602,76 @@
               <p>LEARNING BY BUILDING WITH JAVA, MERN, AND AI/ML</p>
             </div>
           </div>
-          <div class="about-chat about-reveal" id="about-chat" data-reveal="chat" data-reveal-type="panel">
+          <div
+            class="about-chat about-reveal"
+            id="about-chat"
+            data-reveal="chat"
+            data-reveal-type="panel"
+          >
             <span class="about-chat-crop about-chat-crop-tl"></span>
             <span class="about-chat-crop about-chat-crop-tr"></span>
             <span class="about-chat-crop about-chat-crop-bl"></span>
             <span class="about-chat-crop about-chat-crop-br"></span>
             <header class="about-chat-header">
-              <span><i class="about-chat-status"></i>INSTRUMENT: QUERY_INTERFACE</span>
+              <span
+                ><i class="about-chat-status"></i>INSTRUMENT:
+                QUERY_INTERFACE</span
+              >
               <strong>GROUNDING: PROFILE_SHEET</strong>
             </header>
-            <div class="about-chat-log" id="about-chat-log" aria-live="polite"></div>
+            <div
+              class="about-chat-log"
+              id="about-chat-log"
+              aria-live="polite"
+            ></div>
             <form class="about-chat-form" id="about-chat-form">
-              <label class="about-chat-prompt" for="about-chat-input">&gt; QUERY:</label>
-              <input id="about-chat-input" name="query" type="text" autocomplete="off" placeholder="ENTER A PROFILE QUERY..." />
+              <label class="about-chat-prompt" for="about-chat-input"
+                >&gt; QUERY:</label
+              >
+              <input
+                id="about-chat-input"
+                name="query"
+                type="text"
+                autocomplete="off"
+                placeholder="ENTER A PROFILE QUERY..."
+              />
               <button type="submit">[ SEND ]</button>
             </form>
-            <div class="about-chat-suggestions" aria-label="Suggested profile queries">
-              <button type="button" data-chat-prompt="What projects has Arin built?">[ WHAT PROJECTS HAS ARIN BUILT? ]</button>
-              <button type="button" data-chat-prompt="What is Arin currently learning?">[ WHAT IS ARIN CURRENTLY LEARNING? ]</button>
-              <button type="button" data-chat-prompt="What are Arin's coding focuses?">[ WHAT ARE ARIN'S CODING FOCUSES? ]</button>
-              <button type="button" data-chat-prompt="Is Arin open to internships?">[ IS ARIN OPEN TO INTERNSHIPS? ]</button>
+            <div
+              class="about-chat-suggestions"
+              aria-label="Suggested profile queries"
+            >
+              <button
+                type="button"
+                data-chat-prompt="What projects has Arin built?"
+              >
+                [ WHAT PROJECTS HAS ARIN BUILT? ]
+              </button>
+              <button
+                type="button"
+                data-chat-prompt="What is Arin currently learning?"
+              >
+                [ WHAT IS ARIN CURRENTLY LEARNING? ]
+              </button>
+              <button
+                type="button"
+                data-chat-prompt="What are Arin's coding focuses?"
+              >
+                [ WHAT ARE ARIN'S CODING FOCUSES? ]
+              </button>
+              <button
+                type="button"
+                data-chat-prompt="Is Arin open to internships?"
+              >
+                [ IS ARIN OPEN TO INTERNSHIPS? ]
+              </button>
             </div>
           </div>
-          <div class="about-journey about-reveal" data-reveal="journey" data-reveal-type="card">
+          <div
+            class="about-journey about-reveal"
+            data-reveal="journey"
+            data-reveal-type="card"
+          >
             <div class="about-panel-head">
               <span>LEARNING_JOURNEY</span><strong>LIVE_TRACK</strong>
             </div>
@@ -653,41 +692,114 @@
               </div>
             </div>
           </div>
-          <section class="skills-tools-section about-reveal" id="skills-tools" aria-labelledby="skills-tools-title" data-reveal="skills" data-reveal-type="panel">
+          <section
+            class="skills-tools-section about-reveal"
+            id="skills-tools"
+            aria-labelledby="skills-tools-title"
+            data-reveal="skills"
+            data-reveal-type="panel"
+          >
             <header class="skills-tools-header">
               <span class="about-label">03 / COMPONENT_INVENTORY</span>
               <h3 id="skills-tools-title">SKILLS<br /><em>&amp; TOOLS</em></h3>
               <strong>PARTS LIST / FOUNDATION_01</strong>
             </header>
             <div class="skills-tools-list">
-              <div class="skills-category reveal-card" data-skills-category data-reveal-group="skills" data-reveal-type="card">
-                <div class="skills-category-label"><span>LANGUAGES</span><i></i></div>
+              <div
+                class="skills-category reveal-card"
+                data-skills-category
+                data-reveal-group="skills"
+                data-reveal-type="card"
+              >
+                <div class="skills-category-label">
+                  <span>LANGUAGES</span><i></i>
+                </div>
                 <div class="skills-chip-row">
-                  <span class="skills-chip reveal-chip" data-reveal-group="skills">[ PYTHON ]</span><span class="skills-chip reveal-chip" data-reveal-group="skills">[ JAVA ]</span><span class="skills-chip reveal-chip" data-reveal-group="skills">[ C ]</span><span class="skills-chip reveal-chip" data-reveal-group="skills">[ C++ ]</span><span class="skills-chip reveal-chip" data-reveal-group="skills">[ JAVASCRIPT ]</span>
+                  <span
+                    class="skills-chip reveal-chip"
+                    data-reveal-group="skills"
+                    >[ PYTHON ]</span
+                  ><span
+                    class="skills-chip reveal-chip"
+                    data-reveal-group="skills"
+                    >[ JAVA ]</span
+                  ><span
+                    class="skills-chip reveal-chip"
+                    data-reveal-group="skills"
+                    >[ C ]</span
+                  ><span
+                    class="skills-chip reveal-chip"
+                    data-reveal-group="skills"
+                    >[ C++ ]</span
+                  ><span
+                    class="skills-chip reveal-chip"
+                    data-reveal-group="skills"
+                    >[ JAVASCRIPT ]</span
+                  >
                 </div>
               </div>
-              <div class="skills-category reveal-card" data-skills-category data-reveal-group="skills" data-reveal-type="card">
-                <div class="skills-category-label"><span>AI/ML</span><i></i></div>
+              <div
+                class="skills-category reveal-card"
+                data-skills-category
+                data-reveal-group="skills"
+                data-reveal-type="card"
+              >
+                <div class="skills-category-label">
+                  <span>AI/ML</span><i></i>
+                </div>
                 <div class="skills-chip-row">
-                  <span class="skills-chip">[ ARTIFICIAL INTELLIGENCE ]</span><span class="skills-chip">[ MACHINE LEARNING ]</span><span class="skills-chip">[ GENERATIVE AI ]</span>
+                  <span class="skills-chip">[ ARTIFICIAL INTELLIGENCE ]</span
+                  ><span class="skills-chip">[ MACHINE LEARNING ]</span
+                  ><span class="skills-chip">[ GENERATIVE AI ]</span>
                 </div>
               </div>
-              <div class="skills-category reveal-card" data-skills-category data-reveal-group="skills" data-reveal-type="card">
-                <div class="skills-category-label"><span>WEB DEVELOPMENT</span><i></i></div>
+              <div
+                class="skills-category reveal-card"
+                data-skills-category
+                data-reveal-group="skills"
+                data-reveal-type="card"
+              >
+                <div class="skills-category-label">
+                  <span>WEB DEVELOPMENT</span><i></i>
+                </div>
                 <div class="skills-chip-row">
-                  <span class="skills-chip">[ HTML ]</span><span class="skills-chip">[ CSS ]</span><span class="skills-chip">[ JAVASCRIPT ]</span><span class="skills-chip">[ MERN ]</span><span class="skills-chip">[ NODE.JS ]</span><span class="skills-chip">[ EXPRESS ]</span>
+                  <span class="skills-chip">[ HTML ]</span
+                  ><span class="skills-chip">[ CSS ]</span
+                  ><span class="skills-chip">[ JAVASCRIPT ]</span
+                  ><span class="skills-chip">[ MERN ]</span
+                  ><span class="skills-chip">[ NODE.JS ]</span
+                  ><span class="skills-chip">[ EXPRESS ]</span>
                 </div>
               </div>
-              <div class="skills-category reveal-card" data-skills-category data-reveal-group="skills" data-reveal-type="card">
-                <div class="skills-category-label"><span>TOOLS</span><i></i></div>
+              <div
+                class="skills-category reveal-card"
+                data-skills-category
+                data-reveal-group="skills"
+                data-reveal-type="card"
+              >
+                <div class="skills-category-label">
+                  <span>TOOLS</span><i></i>
+                </div>
                 <div class="skills-chip-row">
-                  <span class="skills-chip">[ GEMINI API ]</span><span class="skills-chip">[ DSA ]</span><span class="skills-chip">[ OOP ]</span><span class="skills-chip">[ PROBLEM SOLVING ]</span>
+                  <span class="skills-chip">[ GEMINI API ]</span
+                  ><span class="skills-chip">[ DSA ]</span
+                  ><span class="skills-chip">[ OOP ]</span
+                  ><span class="skills-chip">[ PROBLEM SOLVING ]</span>
                 </div>
               </div>
-              <div class="skills-currently-learning reveal-card" data-skills-category data-reveal-group="skills" data-reveal-type="card">
-                <div class="skills-category-label"><span>CURRENTLY LEARNING</span><i></i></div>
+              <div
+                class="skills-currently-learning reveal-card"
+                data-skills-category
+                data-reveal-group="skills"
+                data-reveal-type="card"
+              >
+                <div class="skills-category-label">
+                  <span>CURRENTLY LEARNING</span><i></i>
+                </div>
                 <div class="skills-chip-row">
-                  <span class="skills-chip">[ GENERATIVE AI ]</span><span class="skills-chip">[ ADVANCED JAVA ]</span><span class="skills-chip">[ PYTHON FOR AI/ML ]</span>
+                  <span class="skills-chip">[ GENERATIVE AI ]</span
+                  ><span class="skills-chip">[ ADVANCED JAVA ]</span
+                  ><span class="skills-chip">[ PYTHON FOR AI/ML ]</span>
                 </div>
               </div>
             </div>
@@ -702,15 +814,29 @@
         data-reveal-type="panel"
       >
         <div class="projects-inner">
-          <header class="projects-heading project-reveal" data-reveal="heading" data-reveal-type="card">
+          <header
+            class="projects-heading project-reveal"
+            data-reveal="heading"
+            data-reveal-type="card"
+          >
             <span class="projects-section-code"
               >SECTION.03 // PROJECT_ARCHIVE</span
             >
             <h2 id="projects-title">WHAT I<br /><em>BUILD</em></h2>
             <p>SELECTED WORK / PROJECT RECORDS</p>
           </header>
-          <div class="project-stage project-reveal" id="project-stage" data-reveal="stage" data-reveal-type="panel"></div>
-          <div class="project-archive project-reveal" id="project-grid" data-reveal="grid" data-reveal-type="panel">
+          <div
+            class="project-stage project-reveal"
+            id="project-stage"
+            data-reveal="stage"
+            data-reveal-type="panel"
+          ></div>
+          <div
+            class="project-archive project-reveal"
+            id="project-grid"
+            data-reveal="grid"
+            data-reveal-type="panel"
+          >
             <div class="project-archive-head">
               <span>PROJECT_GRID</span><strong>03 RECORDS</strong>
             </div>
@@ -725,19 +851,33 @@
         data-reveal-type="panel"
       >
         <div class="coding-profiles-inner">
-          <header class="coding-profiles-heading profile-reveal" data-reveal="heading" data-reveal-type="card">
-            <span class="coding-profiles-code">SECTION.04 // CODING_PROFILES</span>
+          <header
+            class="coding-profiles-heading profile-reveal"
+            data-reveal="heading"
+            data-reveal-type="card"
+          >
+            <span class="coding-profiles-code"
+              >SECTION.04 // CODING_PROFILES</span
+            >
             <h2 id="coding-profiles-title">CODE<br /><em>READOUTS</em></h2>
             <p>LIVE PRACTICE SIGNALS / UPDATE VALUES IN DATA ATTRIBUTES</p>
           </header>
           <div class="coding-profile-panels">
-            <article class="coding-panel profile-reveal reveal-panel" data-profile-panel data-reveal="github" data-reveal-type="panel">
+            <article
+              class="coding-panel profile-reveal reveal-panel"
+              data-profile-panel
+              data-reveal="github"
+              data-reveal-type="panel"
+            >
               <span class="coding-panel-crop coding-panel-crop-tl"></span>
               <span class="coding-panel-crop coding-panel-crop-tr"></span>
               <span class="coding-panel-crop coding-panel-crop-bl"></span>
               <span class="coding-panel-crop coding-panel-crop-br"></span>
               <header class="coding-panel-header">
-                <span><i class="coding-status-node"></i>NODE: GITHUB // github.com/Aarin18</span>
+                <span
+                  ><i class="coding-status-node"></i>NODE: GITHUB //
+                  github.com/Aarin18</span
+                >
                 <strong>ONLINE</strong>
               </header>
               <div class="coding-readouts">
@@ -756,15 +896,29 @@
                   <small>LONGEST: 13 DAYS</small>
                 </div>
               </div>
-              <a class="coding-profile-link" href="https://github.com/Aarin18" target="_blank" rel="noreferrer">[ VIEW PROFILE -&gt; ]</a>
+              <a
+                class="coding-profile-link"
+                href="https://github.com/Aarin18"
+                target="_blank"
+                rel="noreferrer"
+                >[ VIEW PROFILE -&gt; ]</a
+              >
             </article>
-            <article class="coding-panel profile-reveal reveal-panel" data-profile-panel data-reveal="leetcode" data-reveal-type="panel">
+            <article
+              class="coding-panel profile-reveal reveal-panel"
+              data-profile-panel
+              data-reveal="leetcode"
+              data-reveal-type="panel"
+            >
               <span class="coding-panel-crop coding-panel-crop-tl"></span>
               <span class="coding-panel-crop coding-panel-crop-tr"></span>
               <span class="coding-panel-crop coding-panel-crop-bl"></span>
               <span class="coding-panel-crop coding-panel-crop-br"></span>
               <header class="coding-panel-header">
-                <span><i class="coding-status-node"></i>NODE: LEETCODE // leetcode.com/u/Aarin1</span>
+                <span
+                  ><i class="coding-status-node"></i>NODE: LEETCODE //
+                  leetcode.com/u/Aarin1</span
+                >
                 <strong>ONLINE</strong>
               </header>
               <div class="coding-readouts coding-readouts-leetcode">
@@ -775,17 +929,65 @@
                 </div>
                 <div class="coding-readout-cell coding-difficulty-cell">
                   <span>DIFFICULTY BREAKDOWN</span>
-                  <div class="coding-meter" data-meter-value="54" aria-label="Easy solved 59 of 965" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="54"><b>EASY</b><i><em></em></i><strong>59/965</strong></div>
-                  <div class="coding-meter" data-meter-value="42" aria-label="Medium solved 46 of 2115" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><b>MED</b><i><em></em></i><strong>46/2115</strong></div>
-                  <div class="coding-meter" data-meter-value="5" aria-label="Hard solved 5 of 975" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5"><b>HARD</b><i><em></em></i><strong>5/975</strong></div>
+                  <div
+                    class="coding-meter"
+                    data-meter-value="54"
+                    aria-label="Easy solved 59 of 965"
+                    role="meter"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="54"
+                  >
+                    <b>EASY</b><i><em></em></i><strong>59/965</strong>
+                  </div>
+                  <div
+                    class="coding-meter"
+                    data-meter-value="42"
+                    aria-label="Medium solved 46 of 2115"
+                    role="meter"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="42"
+                  >
+                    <b>MED</b><i><em></em></i><strong>46/2115</strong>
+                  </div>
+                  <div
+                    class="coding-meter"
+                    data-meter-value="5"
+                    aria-label="Hard solved 5 of 975"
+                    role="meter"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="5"
+                  >
+                    <b>HARD</b><i><em></em></i><strong>5/975</strong>
+                  </div>
                 </div>
                 <div class="coding-readout-cell coding-focus-cell">
                   <span>PRACTICE FOCUS</span>
-                  <div class="coding-focus-tags"><b>[ARRAYS]</b><b>[STRINGS]</b><b>[BINARY SEARCH]</b><b>[TREES]</b></div>
-                  <small style="display: block; margin-top: 10px; color: var(--accent); font-size: 13px; letter-spacing: 0.06em;">LANGUAGES: JAVA (99) · PYTHON (5) · C++ (4)</small>
+                  <div class="coding-focus-tags">
+                    <b>[ARRAYS]</b><b>[STRINGS]</b><b>[BINARY SEARCH]</b
+                    ><b>[TREES]</b>
+                  </div>
+                  <small
+                    style="
+                      display: block;
+                      margin-top: 10px;
+                      color: var(--accent);
+                      font-size: 13px;
+                      letter-spacing: 0.06em;
+                    "
+                    >LANGUAGES: JAVA (99) · PYTHON (5) · C++ (4)</small
+                  >
                 </div>
               </div>
-              <a class="coding-profile-link" href="https://leetcode.com/u/Aarin1/" target="_blank" rel="noreferrer">[ VIEW PROFILE -&gt; ]</a>
+              <a
+                class="coding-profile-link"
+                href="https://leetcode.com/u/Aarin1/"
+                target="_blank"
+                rel="noreferrer"
+                >[ VIEW PROFILE -&gt; ]</a
+              >
             </article>
           </div>
         </div>
@@ -800,8 +1002,12 @@
       >
         <div class="certifications-inner">
           <header class="certifications-heading">
-            <span class="coding-profiles-code">SECTION.05 // CERTIFICATIONS_LOG</span>
-            <h2 id="certifications-title">CERTIFICATIONS<br /><em>&amp; CREDENTIALS</em></h2>
+            <span class="coding-profiles-code"
+              >SECTION.05 // CERTIFICATIONS_LOG</span
+            >
+            <h2 id="certifications-title">
+              CERTIFICATIONS<br /><em>&amp; CREDENTIALS</em>
+            </h2>
             <p>VERIFIED COMPETENCY / PROFESSIONAL RECORDS</p>
           </header>
           <div class="cert-grid">
@@ -813,7 +1019,9 @@
                 </div>
                 <span class="cert-badge">COMPLETED</span>
               </div>
-              <div class="cert-meta">FOUNDATIONAL AI &amp; PROMPT ENGINEERING</div>
+              <div class="cert-meta">
+                FOUNDATIONAL AI &amp; PROMPT ENGINEERING
+              </div>
             </article>
             <article class="cert-card">
               <div class="cert-card-header">
@@ -823,7 +1031,9 @@
                 </div>
                 <span class="cert-badge">COMPLETED</span>
               </div>
-              <div class="cert-meta">ANTHROPIC API &amp; PLATFORM ARCHITECTURE</div>
+              <div class="cert-meta">
+                ANTHROPIC API &amp; PLATFORM ARCHITECTURE
+              </div>
             </article>
             <article class="cert-card">
               <div class="cert-card-header">
@@ -833,37 +1043,53 @@
                 </div>
                 <span class="cert-badge">COMPLETED</span>
               </div>
-              <div class="cert-meta">AGENTIC CODING &amp; WORKFLOW AUTOMATION</div>
+              <div class="cert-meta">
+                AGENTIC CODING &amp; WORKFLOW AUTOMATION
+              </div>
             </article>
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
                   <h3 class="cert-title">HTML AND CSS</h3>
-                  <span class="cert-issuer">IT SPECIALIST // CERTIPORT (PEARSON VUE)</span>
+                  <span class="cert-issuer"
+                    >IT SPECIALIST // CERTIPORT (PEARSON VUE)</span
+                  >
                 </div>
                 <span class="cert-badge">CERTIFIED</span>
               </div>
-              <div class="cert-meta">ISSUED: DEC 19, 2025 · OFFICIAL INDUSTRY SPEC</div>
+              <div class="cert-meta">
+                ISSUED: DEC 19, 2025 · OFFICIAL INDUSTRY SPEC
+              </div>
             </article>
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
                   <h3 class="cert-title">PYTHON ASSESSMENT</h3>
-                  <span class="cert-issuer">PROFESSIONAL LEVEL // SKILLUPRISE</span>
+                  <span class="cert-issuer"
+                    >PROFESSIONAL LEVEL // SKILLUPRISE</span
+                  >
                 </div>
                 <span class="cert-badge">CERTIFIED</span>
               </div>
-              <div class="cert-meta">ISSUED: DEC 14, 2025 · ADVANCED ALGORITHMIC PYTHON</div>
+              <div class="cert-meta">
+                ISSUED: DEC 14, 2025 · ADVANCED ALGORITHMIC PYTHON
+              </div>
             </article>
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">RED HAT SYSTEM ADMINISTRATION I (RH124)</h3>
+                  <h3 class="cert-title">
+                    RED HAT SYSTEM ADMINISTRATION I (RH124)
+                  </h3>
                   <span class="cert-issuer">RED HAT // 40 CREDIT HOURS</span>
                 </div>
-                <span class="cert-badge badge-attendance">CERTIFICATE OF ATTENDANCE</span>
+                <span class="cert-badge badge-attendance"
+                  >CERTIFICATE OF ATTENDANCE</span
+                >
               </div>
-              <div class="cert-meta">ISSUED: JULY 31, 2026 · SYSTEM ADMIN &amp; LINUX CORE</div>
+              <div class="cert-meta">
+                ISSUED: JULY 31, 2026 · SYSTEM ADMIN &amp; LINUX CORE
+              </div>
             </article>
           </div>
         </div>
@@ -879,37 +1105,60 @@
       >
         <div class="achievements-inner">
           <header class="achievements-heading">
-            <span class="coding-profiles-code">SECTION.06 // ACHIEVEMENTS_RECORD</span>
-            <h2 id="achievements-title">ACHIEVEMENTS<br /><em>&amp; HACKATHONS</em></h2>
+            <span class="coding-profiles-code"
+              >SECTION.06 // ACHIEVEMENTS_RECORD</span
+            >
+            <h2 id="achievements-title">
+              ACHIEVEMENTS<br /><em>&amp; HACKATHONS</em>
+            </h2>
             <p>COMPETITIVE EVENTS / FIELD LOGS</p>
           </header>
           <div class="achievements-grid">
             <article class="achievement-card">
               <div class="achievement-card-header">
                 <div>
-                  <h3 class="achievement-title">AWS STUDENTS COMMUNITY DAY 2025</h3>
-                  <span class="achievement-org">AWS CLOUD CLUB // PARUL UNIVERSITY</span>
+                  <h3 class="achievement-title">
+                    AWS STUDENTS COMMUNITY DAY 2025
+                  </h3>
+                  <span class="achievement-org"
+                    >AWS CLOUD CLUB // PARUL UNIVERSITY</span
+                  >
                 </div>
               </div>
-              <div class="achievement-meta">PARTICIPATED · DEC 13, 2025 · CLOUD ARCHITECTURE &amp; HANDS-ON WORKSHOPS</div>
+              <div class="achievement-meta">
+                PARTICIPATED · DEC 13, 2025 · CLOUD ARCHITECTURE &amp; HANDS-ON
+                WORKSHOPS
+              </div>
             </article>
             <article class="achievement-card">
               <div class="achievement-card-header">
                 <div>
-                  <h3 class="achievement-title">PROMPTWARS × PARUL UNIVERSITY</h3>
-                  <span class="achievement-org">ONE-DAY VIBE-CODING HACKATHON</span>
+                  <h3 class="achievement-title">
+                    PROMPTWARS × PARUL UNIVERSITY
+                  </h3>
+                  <span class="achievement-org"
+                    >ONE-DAY VIBE-CODING HACKATHON</span
+                  >
                 </div>
               </div>
-              <div class="achievement-meta">SEP 5, 2026 · DEPLOYED WORKING AI PROTOTYPE USING GOOGLE ANTIGRAVITY</div>
+              <div class="achievement-meta">
+                SEP 5, 2026 · DEPLOYED WORKING AI PROTOTYPE USING GOOGLE
+                ANTIGRAVITY
+              </div>
             </article>
             <article class="achievement-card">
               <div class="achievement-card-header">
                 <div>
-                  <h3 class="achievement-title">QUIZOFF 2026: INDIA'S BIGGEST AI QUIZ</h3>
+                  <h3 class="achievement-title">
+                    QUIZOFF 2026: INDIA'S BIGGEST AI QUIZ
+                  </h3>
                   <span class="achievement-org">CAMPUSCREW // UNSTOP</span>
                 </div>
               </div>
-              <div class="achievement-meta">JULY 19, 2026 · COMPETED AMONG 5,25,000+ STUDENTS FROM 48,500+ INSTITUTIONS</div>
+              <div class="achievement-meta">
+                JULY 19, 2026 · COMPETED AMONG 5,25,000+ STUDENTS FROM 48,500+
+                INSTITUTIONS
+              </div>
             </article>
           </div>
         </div>
@@ -924,23 +1173,34 @@
       >
         <div class="social-community-inner">
           <header class="social-community-heading">
-            <span class="coding-profiles-code">SECTION.07 // COMMUNITY_RECORD</span>
-            <h2 id="social-community-title">SOCIAL<br /><em>&amp; COMMUNITY</em></h2>
+            <span class="coding-profiles-code"
+              >SECTION.07 // COMMUNITY_RECORD</span
+            >
+            <h2 id="social-community-title">
+              SOCIAL<br /><em>&amp; COMMUNITY</em>
+            </h2>
             <p>FIELD LOG / SUPPORTING CONTEXT</p>
           </header>
-          <article class="community-record reveal-panel" data-community-record data-reveal="record" data-reveal-type="panel">
+          <article
+            class="community-record reveal-panel"
+            data-community-record
+            data-reveal="record"
+            data-reveal-type="panel"
+          >
             <span class="community-crop community-crop-tl"></span>
             <span class="community-crop community-crop-tr"></span>
             <span class="community-crop community-crop-bl"></span>
             <span class="community-crop community-crop-br"></span>
             <header class="community-record-header" data-community-field>
               <div>
-                <span class="community-org">ORG: ROTARACT CLUB OF TARSADI KOSAMBA</span>
+                <span class="community-org"
+                  >ORG: ROTARACT CLUB OF TARSADI KOSAMBA</span
+                >
                 <small>DISTRICT 3060 // ROTARY INTERNATIONAL</small>
               </div>
               <div class="community-role">
                 <span>ROLE: SOCIAL MEDIA CHAIR</span>
-                <strong>ACTIVE: 2+ YRS</strong>
+                <strong>ACTIVE: 3+ YRS</strong>
               </div>
             </header>
             <div class="community-record-body">
@@ -948,12 +1208,23 @@
                 <section class="community-field" data-community-field>
                   <span class="community-field-label">INITIATIVES:</span>
                   <ul>
-                    <li>Blood donation camp — organized on Independence Day (Aug 15, 2026) at Shubham Party Plot, Tarsadi-Kosamba, in coordination with Kosamba Police Station</li>
-                    <li>Flag-hoisting ceremony — India's 80th Independence Day, Aug 15, 2026</li>
+                    <li>
+                      Blood donation camp — organized on Independence Day (Aug
+                      15, 2026) at Shubham Party Plot, Tarsadi-Kosamba, in
+                      coordination with Kosamba Police Station
+                    </li>
+                    <li>
+                      Flag-hoisting ceremony — India's 80th Independence Day,
+                      Aug 15, 2026
+                    </li>
                     <li>Tree plantation drives</li>
-                    <li>Food distribution / feeding initiatives for those in need</li>
+                    <li>
+                      Food distribution / feeding initiatives for those in need
+                    </li>
                     <li>Health check-up camps</li>
-                    <li>Free education support — teaching sessions for students</li>
+                    <li>
+                      Free education support — teaching sessions for students
+                    </li>
                     <li>Navratri celebrations and community festival events</li>
                     <li>Free/subsidized mass marriage initiatives</li>
                     <li>District youth leadership events (PETS-SETS)</li>
@@ -961,12 +1232,26 @@
                 </section>
                 <section class="community-field" data-community-field>
                   <span class="community-field-label">CONTRIBUTION:</span>
-                  <p class="community-placeholder">Managed social media coverage and content creation across these initiatives as Social Media Chair, under the club's 2026–2027 leadership (President Rtr. Indrarajsinh Desai, Secretary Rtr. Aditya Dubey), operating within RI District 3060.</p>
+                  <p class="community-placeholder">
+                    Managed social media coverage and content creation across
+                    these initiatives as Social Media Chair, under the club's
+                    2026–2027 leadership (President Rtr. Indrarajsinh Desai,
+                    Secretary Rtr. Aditya Dubey), operating within RI District
+                    3060.
+                  </p>
                 </section>
                 <section class="community-field" data-community-field>
                   <span class="community-field-label">SKILLS DEVELOPED:</span>
                   <div class="community-skill-chips">
-                    <span class="reveal-chip" data-reveal-group="social">[ COMMUNICATION ]</span><span class="reveal-chip" data-reveal-group="social">[ EVENT PROMOTION ]</span><span class="reveal-chip" data-reveal-group="social">[ TEAMWORK ]</span><span class="reveal-chip" data-reveal-group="social">[ LEADERSHIP ]</span>
+                    <span class="reveal-chip" data-reveal-group="social"
+                      >[ COMMUNICATION ]</span
+                    ><span class="reveal-chip" data-reveal-group="social"
+                      >[ EVENT PROMOTION ]</span
+                    ><span class="reveal-chip" data-reveal-group="social"
+                      >[ TEAMWORK ]</span
+                    ><span class="reveal-chip" data-reveal-group="social"
+                      >[ LEADERSHIP ]</span
+                    >
                   </div>
                 </section>
               </div>
@@ -978,14 +1263,24 @@
               </figure>
             </div>
             <footer class="community-record-footer" data-community-field>
-              <span>RECORD // ACTIVE</span><span>LOGGED: COMMUNITY_SERVICE</span>
+              <span>RECORD // ACTIVE</span
+              ><span>LOGGED: COMMUNITY_SERVICE</span>
             </footer>
           </article>
         </div>
       </section>
-      <section class="resume-section" id="resume" aria-labelledby="resume-title">
+      <section
+        class="resume-section"
+        id="resume"
+        aria-labelledby="resume-title"
+      >
         <div class="resume-inner">
-          <article class="resume-panel reveal-panel" data-resume-panel data-reveal="resume" data-reveal-type="panel">
+          <article
+            class="resume-panel reveal-panel"
+            data-resume-panel
+            data-reveal="resume"
+            data-reveal-type="panel"
+          >
             <span class="resume-crop resume-crop-tl"></span>
             <span class="resume-crop resume-crop-tr"></span>
             <span class="resume-crop resume-crop-bl"></span>
@@ -998,7 +1293,13 @@
               <span>UTILITY // DOWNLOAD</span>
             </header>
             <div class="resume-body" data-resume-field>
-              <a class="resume-preview" href="resume/arin-patel-resume.pdf" target="_blank" rel="noreferrer" aria-label="Open resume preview in a new tab">
+              <a
+                class="resume-preview"
+                href="resume/Arin%20Patel%20Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open resume preview in a new tab"
+              >
                 <span class="resume-preview-crop resume-preview-crop-tl"></span>
                 <span class="resume-preview-crop resume-preview-crop-br"></span>
                 <span>PREVIEW SLOT<br />[ ARIN PATEL RESUME ]</span>
@@ -1006,7 +1307,12 @@
               </a>
               <div class="resume-action">
                 <p>DOCUMENT READY FOR REVIEW</p>
-                <a class="resume-download" href="resume/arin-patel-resume.pdf" download>[ DOWNLOAD &darr; ]</a>
+                <a
+                  class="resume-download"
+                  href="resume/Arin%20Patel%20Resume.pdf"
+                  download="Arin-Patel-Resume.pdf"
+                  >[ DOWNLOAD &darr; ]</a
+                >
               </div>
             </div>
           </article>
@@ -1019,23 +1325,53 @@
           <div class="footer-inner">
             <div class="footer-marquee" aria-label="Portfolio status">
               <div class="footer-marquee-track">
-                AVAILABLE FOR OPPORTUNITIES <span>✦</span> B.TECH AI &amp; ML <span>✦</span> PARUL UNIVERSITY <span>✦</span> OPEN TO INTERNSHIPS <span>✦</span>
-                AVAILABLE FOR OPPORTUNITIES <span>✦</span> B.TECH AI &amp; ML <span>✦</span> PARUL UNIVERSITY <span>✦</span> OPEN TO INTERNSHIPS <span>✦</span>
+                AVAILABLE FOR OPPORTUNITIES <span>✦</span> B.TECH AI &amp; ML
+                <span>✦</span> PARUL UNIVERSITY <span>✦</span> OPEN TO
+                INTERNSHIPS <span>✦</span> AVAILABLE FOR OPPORTUNITIES
+                <span>✦</span> B.TECH AI &amp; ML <span>✦</span> PARUL
+                UNIVERSITY <span>✦</span> OPEN TO INTERNSHIPS <span>✦</span>
               </div>
             </div>
             <div class="footer-center">
               <span class="footer-code">EOF // OPEN_CHANNEL</span>
               <h2 id="footer-title">Let's talk<span>.</span></h2>
               <div class="footer-links" aria-label="Reach links">
-                <a class="footer-link footer-magnetic" href="https://github.com/Aarin18" target="_blank" rel="noreferrer"><span>GH //</span><strong>github.com/Aarin18</strong><b>-&gt;</b></a>
-                <a class="footer-link footer-magnetic" href="https://www.linkedin.com/in/arin-patel-640468398/" target="_blank" rel="noreferrer"><span>LI //</span><strong>linkedin.com/in/arin-patel-640468398</strong><b>-&gt;</b></a>
-                <a class="footer-link footer-magnetic" href="mailto:arinpatel999@gmail.com"><span>MAIL //</span><strong>arinpatel999@gmail.com</strong><b>-&gt;</b></a>
+                <a
+                  class="footer-link footer-magnetic"
+                  href="https://github.com/Aarin18"
+                  target="_blank"
+                  rel="noreferrer"
+                  ><span>GH //</span><strong>github.com/Aarin18</strong
+                  ><b>-&gt;</b></a
+                >
+                <a
+                  class="footer-link footer-magnetic"
+                  href="https://www.linkedin.com/in/arin-patel-640468398/"
+                  target="_blank"
+                  rel="noreferrer"
+                  ><span>LI //</span
+                  ><strong>linkedin.com/in/arin-patel-640468398</strong
+                  ><b>-&gt;</b></a
+                >
+                <a
+                  class="footer-link footer-magnetic"
+                  href="mailto:arinpatel999@gmail.com"
+                  ><span>MAIL //</span><strong>arinpatel999@gmail.com</strong
+                  ><b>-&gt;</b></a
+                >
               </div>
             </div>
             <div class="footer-bottom">
               <span>© 2026 ARIN PATEL</span>
               <span>EOF //</span>
-              <button class="footer-top-button footer-magnetic" id="footer-top-button" type="button" aria-label="Back to top">↑</button>
+              <button
+                class="footer-top-button footer-magnetic"
+                id="footer-top-button"
+                type="button"
+                aria-label="Back to top"
+              >
+                ↑
+              </button>
             </div>
           </div>
         </footer>
@@ -1053,7 +1389,7 @@
         color: var(--on-surface);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 650ms ease;
+        transition: opacity 200ms ease-out;
         font-family: "Geist", sans-serif;
       }
       .portfolio-hero.is-visible {
@@ -1904,8 +2240,8 @@
         border-width: 0 2px 2px 0;
       }
       .portfolio-hero.is-visible .about-chat-crop {
-        animation: about-crop-lock 620ms cubic-bezier(0.34, 1.56, 0.64, 1)
-          180ms both;
+        animation: about-crop-lock 620ms cubic-bezier(0.34, 1.56, 0.64, 1) 180ms
+          both;
       }
       @keyframes about-crop-lock {
         from {
@@ -2499,12 +2835,10 @@
           both;
       }
       .project-grid-card.project-selected {
-        animation: project-card-pull 520ms cubic-bezier(0.22, 1, 0.36, 1)
-          both;
+        animation: project-card-pull 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
       }
       .project-grid-card.project-returning {
-        animation: project-card-return 520ms cubic-bezier(0.22, 1, 0.36, 1)
-          both;
+        animation: project-card-return 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
       }
       @keyframes project-formation-in {
         from {
@@ -2793,7 +3127,10 @@
           linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
           linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
           var(--surface);
-        background-size: 80px 80px, 80px 80px, auto;
+        background-size:
+          80px 80px,
+          80px 80px,
+          auto;
         color: var(--on-surface);
       }
       .coding-profiles-inner {
@@ -3541,7 +3878,9 @@
         background: var(--surface-secondary);
         opacity: 0;
         transform: translateY(8px);
-        transition: opacity 260ms ease, transform 260ms ease;
+        transition:
+          opacity 260ms ease,
+          transform 260ms ease;
       }
       .resume-panel::before {
         content: "";
@@ -3590,8 +3929,7 @@
         border-width: 0 2px 2px 0;
       }
       .resume-section.is-resolved .resume-crop {
-        animation: resume-crop-lock 300ms cubic-bezier(0.34, 1.56, 0.64, 1)
-          both;
+        animation: resume-crop-lock 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
       }
       @keyframes resume-crop-lock {
         to {
@@ -3603,7 +3941,9 @@
       .resume-body {
         opacity: 0;
         transform: translateX(-8px);
-        transition: opacity 220ms ease, transform 260ms ease;
+        transition:
+          opacity 220ms ease,
+          transform 260ms ease;
       }
       .resume-header {
         display: flex;
@@ -3793,9 +4133,25 @@
           linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
           linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
           linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
-        background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
-        -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
-        mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+        background-size:
+          80px 80px,
+          80px 80px,
+          16px 16px,
+          16px 16px;
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          #000 14%,
+          #000 86%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          #000 14%,
+          #000 86%,
+          transparent
+        );
       }
       .footer-watermark {
         position: absolute;
@@ -3803,7 +4159,9 @@
         left: 50%;
         z-index: 0;
         color: transparent;
-        font: 900 26vw/0.72 "Barlow Condensed", sans-serif;
+        font:
+          900 26vw/0.72 "Barlow Condensed",
+          sans-serif;
         letter-spacing: 0;
         text-align: center;
         white-space: nowrap;
@@ -3836,7 +4194,9 @@
         width: max-content;
         padding: 10px 0 9px;
         color: var(--on-surface-secondary);
-        font: 500 13px/1 "JetBrains Mono", monospace;
+        font:
+          500 13px/1 "JetBrains Mono",
+          monospace;
         letter-spacing: 0.12em;
         text-transform: uppercase;
         white-space: nowrap;
@@ -3850,7 +4210,9 @@
         color: var(--accent);
       }
       @keyframes footer-marquee {
-        to { transform: translateX(-50%); }
+        to {
+          transform: translateX(-50%);
+        }
       }
       .footer-center {
         width: min(760px, 100%);
@@ -3860,7 +4222,9 @@
         display: block;
         margin-bottom: 18px;
         color: var(--accent);
-        font: 500 13px/1.5 "JetBrains Mono", monospace;
+        font:
+          500 13px/1.5 "JetBrains Mono",
+          monospace;
         letter-spacing: 0.14em;
       }
       .footer-center h2 {
@@ -3868,10 +4232,16 @@
         max-width: 100%;
         margin: 0 0 36px;
         color: transparent;
-        background: linear-gradient(to bottom, var(--on-surface) 25%, transparent 100%);
+        background: linear-gradient(
+          to bottom,
+          var(--on-surface) 25%,
+          transparent 100%
+        );
         -webkit-background-clip: text;
         background-clip: text;
-        font: 800 clamp(72px, 11vw, 150px)/0.78 "Barlow Condensed", sans-serif;
+        font:
+          800 clamp(72px, 11vw, 150px)/0.78 "Barlow Condensed",
+          sans-serif;
         letter-spacing: 0.01em;
       }
       .footer-center h2 span {
@@ -3890,7 +4260,9 @@
         padding: 0 14px;
         border: 1px solid var(--border-subtle);
         color: var(--on-surface);
-        font: 500 13px/1.4 "JetBrains Mono", monospace;
+        font:
+          500 13px/1.4 "JetBrains Mono",
+          monospace;
         letter-spacing: 0.08em;
         text-decoration: none;
         transform: translate3d(0, 0, 0);
@@ -3922,7 +4294,9 @@
         align-items: end;
         gap: 20px;
         color: var(--on-surface-muted);
-        font: 500 13px/1.4 "JetBrains Mono", monospace;
+        font:
+          500 13px/1.4 "JetBrains Mono",
+          monospace;
         letter-spacing: 0.1em;
         text-transform: uppercase;
       }
@@ -3940,7 +4314,9 @@
         border-radius: 50%;
         background: transparent;
         color: var(--accent);
-        font: 500 20px/1 "JetBrains Mono", monospace;
+        font:
+          500 20px/1 "JetBrains Mono",
+          monospace;
         cursor: pointer;
         transform: translate3d(0, 0, 0);
         will-change: auto;
@@ -4049,7 +4425,7 @@
       const streakCanvas = document.getElementById("streak-canvas");
       const streakCtx = streakCanvas.getContext("2d");
       const flashOverlay = document.getElementById("flash-overlay");
-      const resolvedView = document.getElementById("resolved-view");
+      const soundHint = document.getElementById("sound-hint");
       const timerDisplay = document.getElementById("timer-display");
       const statusLabel = document.getElementById("status-label");
 
@@ -4099,6 +4475,7 @@
           this.riserNoiseGain = null;
           this.ambientOsc = null;
           this.ambientGain = null;
+          this.startupTonePlayed = false;
         }
 
         trackNode(node) {
@@ -4113,8 +4490,54 @@
             if (AudioCtx) this.ctx = new AudioCtx();
           }
           if (this.ctx && this.ctx.state === "suspended") {
-            this.ctx.resume().catch(() => {});
+            soundHint.classList.remove("is-expired");
+            soundHint.classList.add("is-visible");
+            window.setTimeout(() => {
+              if (this.ctx && this.ctx.state === "suspended") {
+                soundHint.classList.add("is-expired");
+              }
+            }, 2000);
+            this.ctx
+              .resume()
+              .then(() => {
+                soundHint.classList.remove("is-visible");
+                soundHint.classList.add("is-expired");
+                this.playStartupTone();
+              })
+              .catch(() => {});
+          } else if (this.ctx) {
+            soundHint.classList.remove("is-visible");
+            soundHint.classList.add("is-expired");
+            this.playStartupTone();
           }
+        }
+
+        playStartupTone() {
+          if (
+            introHandedOff ||
+            !this.enabled ||
+            !this.ctx ||
+            this.ctx.state !== "running" ||
+            this.startupTonePlayed
+          ) {
+            return;
+          }
+          try {
+            this.startupTonePlayed = true;
+            const now = this.ctx.currentTime;
+            const osc = this.trackNode(this.ctx.createOscillator());
+            const gain = this.trackNode(this.ctx.createGain());
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(220, now);
+            osc.frequency.exponentialRampToValueAtTime(330, now + 0.12);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.2);
+          } catch (e) {}
         }
 
         // Line 1: Playful rising pop/blip per letter
@@ -4180,7 +4603,8 @@
 
         // 1.5s - 2.5s: Low warm sub-harmonic hum as typography dims
         startDimHum() {
-          if (introHandedOff || !this.enabled || !this.ctx || this.humOsc) return;
+          if (introHandedOff || !this.enabled || !this.ctx || this.humOsc)
+            return;
           try {
             const now = this.ctx.currentTime;
             this.humOsc = this.trackNode(this.ctx.createOscillator());
@@ -4348,6 +4772,7 @@
           this.riserNoiseGain = null;
           this.ambientOsc = null;
           this.ambientGain = null;
+          this.startupTonePlayed = false;
         }
       }
 
@@ -4417,7 +4842,6 @@
         streakCtx.clearRect(0, 0, streakCanvas.width, streakCanvas.height);
         streakCanvas.style.opacity = "0";
         flashOverlay.style.opacity = "0";
-        resolvedView.style.opacity = "0";
 
         // Restore HUD Chrome
         hudHeader.style.opacity = "1";
@@ -4675,12 +5099,6 @@
           const flashProgress = Math.min(1, resolveElapsed / 650); // first 650ms
           const flashAlpha = Math.max(0, 1.0 - easeOutCubic(flashProgress));
           flashOverlay.style.opacity = flashAlpha.toFixed(3);
-
-          // Settled calm pristine empty frame ready for webpage loading
-          if (resolveElapsed > 300) {
-            const readyProg = Math.min(1, (resolveElapsed - 300) / 600);
-            resolvedView.style.opacity = readyProg.toFixed(2);
-          }
         }
 
         // ========================================================
@@ -4689,7 +5107,6 @@
         else if (elapsed > TOTAL_DURATION) {
           timerDisplay.innerText = "00:05.00s";
           flashOverlay.style.opacity = "0";
-          resolvedView.style.opacity = "1";
           statusLabel.innerText = "SEQUENCE 5.00S COMPLETED // CANVAS READY";
           isRunning = false;
           audio.stopAll();
@@ -4799,7 +5216,8 @@
           type: "FEASIBILITY & MENTORING TOOL // GEMINI API",
           description:
             "A project feasibility and mentoring tool for final-year students — submit a project profile and get a structured feasibility analysis, technical recommendations, risks, mentor advice, and a roadmap, powered by Gemini.",
-          stack: "VANILLA HTML/CSS/JS FRONTEND · NODE.JS/EXPRESS BACKEND · GOOGLE GEMINI API (@GOOGLE/GENAI SDK)",
+          stack:
+            "VANILLA HTML/CSS/JS FRONTEND · NODE.JS/EXPRESS BACKEND · GOOGLE GEMINI API (@GOOGLE/GENAI SDK)",
           status: "SOURCE AVAILABLE",
           mark: "FEASIBILITY / ROADMAP / ADVICE",
         },
@@ -4809,7 +5227,8 @@
           type: "MUNICIPAL INCIDENT PLATFORM // SIH 2026",
           description:
             "A municipal incident-management platform built for Smart India Hackathon 2026 — uses an AI pipeline to cluster duplicate citizen complaints (e.g. many reports of the same pothole) into a single incident on an interactive map, instead of creating disconnected tickets. Role: Mobile Lead (Expo/React Native citizen app with camera/GPS capture & gamification UI) as part of a 6-person team.",
-          stack: "REACT NATIVE/EXPO · NEXT.JS · FASTAPI · SUPABASE/POSTGIS · QWEN3-VL-8B · WHISPER · MINILM",
+          stack:
+            "REACT NATIVE/EXPO · NEXT.JS · FASTAPI · SUPABASE/POSTGIS · QWEN3-VL-8B · WHISPER · MINILM",
           status: "TEAM PROJECT // SIH 2026",
           mark: "MOBILE LEAD // CLUSTERING / MAPS",
         },
@@ -4965,7 +5384,8 @@
         aboutChatInput.value = "";
         const response = await requestAssistantReply(normalizedQuery);
         appendChatMessage(
-          response || "BACKEND_PENDING // CONNECT requestAssistantReply() TO AN LLM",
+          response ||
+            "BACKEND_PENDING // CONNECT requestAssistantReply() TO AN LLM",
           "bot",
         );
       }
@@ -5008,22 +5428,40 @@
         audio.enabled = false; // belt-and-suspenders: no further sounds can fire
         window.removeEventListener("pointerdown", ensureAudioAndRun);
         window.removeEventListener("keydown", handleIntroKeydown);
-        window.removeEventListener("DOMContentLoaded", handleIntroDOMContentLoaded);
+        window.removeEventListener(
+          "DOMContentLoaded",
+          handleIntroDOMContentLoaded,
+        );
         window.removeEventListener("load", handleIntroLoad);
         stage.removeEventListener("click", handleStageClick);
-      }, 5150);
+      }, 5050);
     </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"
+    ></script>
     <script defer>
       window.addEventListener("DOMContentLoaded", () => {
         const hero = document.querySelector(".portfolio-hero");
-        if (!hero || !window.gsap || !window.ScrollTrigger || !window.SplitText) return;
+        if (!hero || !window.gsap || !window.ScrollTrigger || !window.SplitText)
+          return;
 
         gsap.registerPlugin(ScrollTrigger, SplitText);
-        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
         let portfolioLenis = null;
 
         if (window.Lenis) {
@@ -5086,13 +5524,21 @@
             ].join(", ");
             const headingSplits = [];
             document.querySelectorAll(headingSelector).forEach((heading) => {
-              const split = SplitText.create(heading, { type: "words", wordsClass: "gsap-heading-word" });
+              const split = SplitText.create(heading, {
+                type: "words",
+                wordsClass: "gsap-heading-word",
+              });
               headingSplits.push(split);
               if (reducedMotion) {
                 gsap.set(split.words, { clearProps: "all" });
                 return;
               }
-              gsap.set(split.words, { opacity: 0, yPercent: 30, rotate: 5, willChange: "transform, opacity" });
+              gsap.set(split.words, {
+                opacity: 0,
+                yPercent: 30,
+                rotate: 5,
+                willChange: "transform, opacity",
+              });
               const timeline = gsap.timeline({
                 scrollTrigger: {
                   trigger: heading,
@@ -5109,18 +5555,26 @@
                 rotate: 0,
                 stagger: 0.045,
                 ease: "power2.out",
-                onComplete: () => gsap.set(split.words, { clearProps: "willChange" }),
+                onComplete: () =>
+                  gsap.set(split.words, { clearProps: "willChange" }),
               });
             });
 
             const revealTargets = document.querySelectorAll(
-              '[data-reveal-type], .coding-readout-cell, .community-record-header, .community-field, .community-photo-slot, .community-record-footer, .resume-header, .resume-body, .resume-download',
+              "[data-reveal-type], .coding-readout-cell, .community-record-header, .community-field, .community-photo-slot, .community-record-footer, .resume-header, .resume-body, .resume-download",
             );
             if (reducedMotion) {
-              gsap.set(revealTargets, { opacity: 1, clearProps: "transform, clipPath, willChange" });
+              gsap.set(revealTargets, {
+                opacity: 1,
+                clearProps: "transform, clipPath, willChange",
+              });
             } else {
               revealTargets.forEach((target) => {
-                gsap.set(target, { opacity: 0, y: 16, willChange: "transform, opacity" });
+                gsap.set(target, {
+                  opacity: 0,
+                  y: 16,
+                  willChange: "transform, opacity",
+                });
                 animateWithCleanup(target, {
                   opacity: 1,
                   y: 0,
@@ -5137,35 +5591,50 @@
               });
             }
 
-            document.querySelectorAll(".skills-chip-row, .certification-chip-row, .certifications-chips").forEach((row) => {
-              const chips = row.querySelectorAll(".skills-chip, .reveal-chip, .certification-chip, .certifications-chip");
-              if (!chips.length) return;
-              if (reducedMotion) {
-                gsap.set(chips, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
-                return;
-              }
-              gsap.set(chips, { opacity: 1, clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)" });
-              gsap.to(chips, {
-                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                stagger: 0.08,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: row,
-                  start: "top 85%",
-                  end: "top 55%",
-                  scrub: 1,
-                  once: true,
-                  ...scrollOptions,
-                },
+            document
+              .querySelectorAll(
+                ".skills-chip-row, .certification-chip-row, .certifications-chips",
+              )
+              .forEach((row) => {
+                const chips = row.querySelectorAll(
+                  ".skills-chip, .reveal-chip, .certification-chip, .certifications-chip",
+                );
+                if (!chips.length) return;
+                if (reducedMotion) {
+                  gsap.set(chips, {
+                    opacity: 1,
+                    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                  });
+                  return;
+                }
+                gsap.set(chips, {
+                  opacity: 1,
+                  clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
+                });
+                gsap.to(chips, {
+                  clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                  stagger: 0.08,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: row,
+                    start: "top 85%",
+                    end: "top 55%",
+                    scrub: 1,
+                    once: true,
+                    ...scrollOptions,
+                  },
+                });
               });
-            });
 
             document.querySelectorAll("[data-meter-value]").forEach((meter) => {
               const value = Number(meter.dataset.meterValue);
               const barEl = meter.querySelector("em");
               if (!barEl || !Number.isFinite(value)) return;
               const targetPercent = `${Math.max(0, Math.min(100, value))}%`;
-              meter.setAttribute("aria-valuenow", String(Math.max(0, Math.min(100, value))));
+              meter.setAttribute(
+                "aria-valuenow",
+                String(Math.max(0, Math.min(100, value))),
+              );
               if (reducedMotion) {
                 gsap.set(barEl, { width: targetPercent });
                 return;
@@ -5184,14 +5653,17 @@
               });
             });
 
-            window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+            window.addEventListener("load", () => ScrollTrigger.refresh(), {
+              once: true,
+            });
             ScrollTrigger.refresh();
             return () => headingSplits.forEach((split) => split.revert());
           },
         );
 
         const footerCurtain = document.getElementById("footer-curtain");
-        const footerWatermark = footerCurtain?.querySelector(".footer-watermark");
+        const footerWatermark =
+          footerCurtain?.querySelector(".footer-watermark");
         const footerMarquee = footerCurtain?.querySelector(".footer-marquee");
         const footerCode = footerCurtain?.querySelector(".footer-code");
         const footerTitle = footerCurtain?.querySelector("#footer-title");
@@ -5212,8 +5684,16 @@
               clearProps: "transform, willChange",
             });
           } else {
-            gsap.set(footerWatermark, { opacity: 0, yPercent: 10, willChange: "transform, opacity" });
-            gsap.set(footerContent, { opacity: 0, y: 28, willChange: "transform, opacity" });
+            gsap.set(footerWatermark, {
+              opacity: 0,
+              yPercent: 10,
+              willChange: "transform, opacity",
+            });
+            gsap.set(footerContent, {
+              opacity: 0,
+              y: 28,
+              willChange: "transform, opacity",
+            });
             const footerTimeline = gsap.timeline({
               scrollTrigger: {
                 trigger: footerCurtain,
@@ -5224,51 +5704,67 @@
               },
             });
             footerTimeline
-              .to(footerWatermark, { opacity: 0.38, yPercent: 0, ease: "none" }, 0)
-              .to(footerContent, {
-                opacity: 1,
-                y: 0,
-                stagger: 0.08,
-                ease: "power2.out",
-                onComplete: () => gsap.set(footerContent, { clearProps: "willChange" }),
-              }, 0.08);
+              .to(
+                footerWatermark,
+                { opacity: 0.38, yPercent: 0, ease: "none" },
+                0,
+              )
+              .to(
+                footerContent,
+                {
+                  opacity: 1,
+                  y: 0,
+                  stagger: 0.08,
+                  ease: "power2.out",
+                  onComplete: () =>
+                    gsap.set(footerContent, { clearProps: "willChange" }),
+                },
+                0.08,
+              );
           }
 
-          footerCurtain.querySelectorAll(".footer-magnetic").forEach((element) => {
-            if (reducedMotion) return;
-            element.addEventListener("pointermove", (event) => {
-              const bounds = element.getBoundingClientRect();
-              const offsetX = event.clientX - (bounds.left + bounds.width / 2);
-              const offsetY = event.clientY - (bounds.top + bounds.height / 2);
-              gsap.set(element, { willChange: "transform" });
-              gsap.to(element, {
-                x: offsetX * 0.3,
-                y: offsetY * 0.3,
-                duration: 0.35,
-                ease: "power3.out",
-                overwrite: true,
+          footerCurtain
+            .querySelectorAll(".footer-magnetic")
+            .forEach((element) => {
+              if (reducedMotion) return;
+              element.addEventListener("pointermove", (event) => {
+                const bounds = element.getBoundingClientRect();
+                const offsetX =
+                  event.clientX - (bounds.left + bounds.width / 2);
+                const offsetY =
+                  event.clientY - (bounds.top + bounds.height / 2);
+                gsap.set(element, { willChange: "transform" });
+                gsap.to(element, {
+                  x: offsetX * 0.3,
+                  y: offsetY * 0.3,
+                  duration: 0.35,
+                  ease: "power3.out",
+                  overwrite: true,
+                });
+              });
+              element.addEventListener("pointerleave", () => {
+                gsap.set(element, { willChange: "transform" });
+                gsap.to(element, {
+                  x: 0,
+                  y: 0,
+                  duration: 0.8,
+                  ease: "elastic.out(1, 0.35)",
+                  overwrite: true,
+                  onComplete: () =>
+                    gsap.set(element, { clearProps: "willChange" }),
+                });
               });
             });
-            element.addEventListener("pointerleave", () => {
-              gsap.set(element, { willChange: "transform" });
-              gsap.to(element, {
-                x: 0,
-                y: 0,
-                duration: 0.8,
-                ease: "elastic.out(1, 0.35)",
-                overwrite: true,
-                onComplete: () => gsap.set(element, { clearProps: "willChange" }),
-              });
-            });
-          });
 
-          document.getElementById("footer-top-button")?.addEventListener("click", () => {
-            if (portfolioLenis) {
-              portfolioLenis.scrollTo(0, { duration: 1.2 });
-            }
-          });
+          document
+            .getElementById("footer-top-button")
+            ?.addEventListener("click", () => {
+              if (portfolioLenis) {
+                portfolioLenis.scrollTo(0, { duration: 1.2 });
+              }
+            });
         }
       });
     </script>
   </body>
-</html> 
+</html>
