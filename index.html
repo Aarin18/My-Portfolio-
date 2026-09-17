@@ -5442,8 +5442,28 @@
       }
 
       async function requestAssistantReply(query) {
-        void query;
-        return null;
+        const fallback =
+          "Having trouble reaching the instrument right now - try the Contact section below.";
+
+        try {
+          if (query.length > 300) {
+            return "Please keep your query under 300 characters.";
+          }
+
+          const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query }),
+          });
+          if (!response.ok) throw new Error("Chat request failed");
+
+          const data = await response.json();
+          return typeof data.reply === "string" && data.reply.trim()
+            ? data.reply
+            : fallback;
+        } catch (error) {
+          return fallback;
+        }
       }
 
       async function submitChatQuery(query) {
@@ -5452,11 +5472,7 @@
         appendChatMessage(normalizedQuery, "user");
         aboutChatInput.value = "";
         const response = await requestAssistantReply(normalizedQuery);
-        appendChatMessage(
-          response ||
-            "BACKEND_PENDING // CONNECT requestAssistantReply() TO AN LLM",
-          "bot",
-        );
+        appendChatMessage(response, "bot");
       }
 
       aboutChatForm.addEventListener("submit", (event) => {
