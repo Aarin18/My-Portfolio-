@@ -1286,12 +1286,29 @@
                   </div>
                 </section>
               </div>
-              <figure class="community-photo-slot" data-community-field>
-                <div class="community-photo-frame">
-                  <span>PHOTO SLOT / RESERVED</span>
+              <aside class="community-quote-panel" data-community-field>
+                <span class="community-crop community-crop-tl"></span>
+                <span class="community-crop community-crop-tr"></span>
+                <span class="community-crop community-crop-bl"></span>
+                <span class="community-crop community-crop-br"></span>
+                <blockquote>
+                  <span class="community-quote-mark">&ldquo;</span>
+                  <p>
+                    Every initiative gave me a way to turn community service
+                    into stories that connect people and inspire action.
+                  </p>
+                  <cite>&mdash; ARIN PATEL, SOCIAL MEDIA CHAIR</cite>
+                </blockquote>
+                <div class="community-quote-action">
+                  <span>VERIFY THE WORK //</span>
+                  <a
+                    href="https://www.instagram.com/ractk__/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >[ @ractk__ ON INSTAGRAM -&gt; ]</a
+                  >
                 </div>
-                <figcaption>FIG. 01 - COMMUNITY EVENT</figcaption>
-              </figure>
+              </aside>
             </div>
             <footer class="community-record-footer" data-community-field>
               <span>RECORD // ACTIVE</span
@@ -1331,9 +1348,18 @@
                 rel="noreferrer"
                 aria-label="Open resume preview in a new tab"
               >
-                <span class="resume-preview-crop resume-preview-crop-tl"></span>
-                <span class="resume-preview-crop resume-preview-crop-br"></span>
-                <span>PREVIEW SLOT<br />[ ARIN PATEL RESUME ]</span>
+                <span class="resume-preview-frame">
+                  <span
+                    class="resume-preview-crop resume-preview-crop-tl"
+                  ></span>
+                  <span
+                    class="resume-preview-crop resume-preview-crop-br"
+                  ></span>
+                  <img
+                    src="assets/resume-preview.png"
+                    alt="First page of Arin Patel's resume"
+                  />
+                </span>
                 <small>FIG. 01 // RESUME.PDF</small>
               </a>
               <div class="resume-action">
@@ -1968,6 +1994,7 @@
         padding: 96px 48px 120px;
         display: grid;
         grid-template-columns: repeat(12, minmax(0, 1fr));
+        grid-template-rows: auto;
         gap: 32px;
       }
       .about-heading {
@@ -2192,7 +2219,7 @@
       }
       .about-spec-sheet {
         grid-column: 2 / span 6;
-        align-self: end;
+        align-self: start;
         padding-bottom: 4px;
       }
       .about-spec-row {
@@ -2220,6 +2247,7 @@
       }
       .about-chat {
         grid-column: 9 / span 4;
+        align-self: start;
         position: relative;
         min-width: 0;
         padding: 20px;
@@ -3668,7 +3696,7 @@
       }
       .community-record-header,
       .community-field,
-      .community-photo-slot,
+      .community-quote-panel,
       .community-record-footer {
         opacity: 0;
         transform: translateX(-16px);
@@ -3687,8 +3715,7 @@
       .community-org,
       .community-role,
       .community-record-footer,
-      .community-field-label,
-      .community-photo-slot figcaption {
+      .community-field-label {
         font:
           500 13px/1.5 "JetBrains Mono",
           monospace;
@@ -3782,51 +3809,71 @@
           monospace;
         letter-spacing: 0.05em;
       }
-      .community-photo-slot {
-        margin: 0;
-        align-self: start;
-      }
-      .community-photo-frame {
+      .community-quote-panel {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        aspect-ratio: 4 / 3;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100%;
+        padding: 24px;
         border: 1px solid var(--border-subtle);
-        background-image:
-          linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
-          linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px);
-        background-size: 24px 24px;
+        background: var(--surface);
+      }
+      .community-quote-panel blockquote {
+        position: relative;
+        margin: 0;
+        padding: 0 0 28px;
+      }
+      .community-quote-mark {
+        display: block;
+        height: 30px;
+        color: var(--accent);
+        font:
+          800 62px/0.8 "Barlow Condensed",
+          sans-serif;
+      }
+      .community-quote-panel blockquote p {
+        margin: 0;
+        color: var(--on-surface);
+        font:
+          400 24px/1.05 "Barlow Condensed",
+          sans-serif;
+        letter-spacing: 0.01em;
+      }
+      .community-quote-panel cite {
+        display: block;
+        margin-top: 20px;
         color: var(--on-surface-muted);
         font:
-          500 13px/1.5 "JetBrains Mono",
+          500 11px/1.5 "JetBrains Mono",
           monospace;
-        letter-spacing: 0.1em;
-        text-align: center;
+        font-style: normal;
+        letter-spacing: 0.08em;
       }
-      .community-photo-frame::before,
-      .community-photo-frame::after {
-        content: "";
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        border-color: var(--accent);
-        border-style: solid;
-      }
-      .community-photo-frame::before {
-        top: -5px;
-        left: -5px;
-        border-width: 1px 0 0 1px;
-      }
-      .community-photo-frame::after {
-        right: -5px;
-        bottom: -5px;
-        border-width: 0 1px 1px 0;
-      }
-      .community-photo-slot figcaption {
-        margin-top: 10px;
+      .community-quote-action {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-subtle);
         color: var(--on-surface-muted);
-        font-size: 13px;
+        font:
+          500 11px/1.5 "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.06em;
+      }
+      .community-quote-action a {
+        color: var(--on-surface);
+        text-decoration: none;
+        transition: color 120ms ease;
+      }
+      .community-quote-action a:hover,
+      .community-quote-action a:focus-visible {
+        color: var(--accent);
+      }
+      .community-quote-action a:focus-visible {
+        outline: 1px solid var(--focus-ring);
+        outline-offset: 3px;
       }
       .community-record-footer {
         display: flex;
@@ -3856,7 +3903,7 @@
         transform: translateX(0);
         transition-delay: 540ms;
       }
-      .social-community-section.is-resolved .community-photo-slot {
+      .social-community-section.is-resolved .community-quote-panel {
         opacity: 1;
         transform: translateX(0);
         transition-delay: 420ms;
@@ -4037,23 +4084,27 @@
       }
       .resume-body {
         display: grid;
-        grid-template-columns: 180px minmax(0, 1fr);
-        align-items: center;
-        gap: 28px;
+        grid-template-columns: minmax(260px, 280px) minmax(0, 1fr);
+        align-items: start;
+        gap: 24px;
         padding-top: 20px;
       }
       .resume-preview {
         position: relative;
         display: flex;
-        aspect-ratio: 3 / 4;
-        align-items: center;
-        justify-content: center;
+        align-items: stretch;
         flex-direction: column;
-        gap: 8px;
-        border: 1px solid var(--border-subtle);
+        gap: 10px;
         color: var(--on-surface-muted);
         text-align: center;
         text-decoration: none;
+      }
+      .resume-preview-frame {
+        position: relative;
+        display: block;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        border: 1px solid var(--border-subtle);
         background-image:
           linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
           linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px);
@@ -4061,13 +4112,21 @@
       }
       .resume-preview:hover {
         color: var(--accent);
+      }
+      .resume-preview:hover .resume-preview-frame {
         border-color: var(--accent);
       }
+      .resume-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+      }
       .resume-preview small {
-        position: absolute;
-        right: 8px;
-        bottom: 8px;
+        display: block;
+        color: var(--on-surface-muted);
         font-size: 13px;
+        text-align: left;
       }
       .resume-preview-crop {
         position: absolute;
@@ -4099,16 +4158,18 @@
       .resume-download {
         display: inline-flex;
         padding: 11px 14px;
-        color: var(--on-accent);
+        color: var(--accent);
         border: 1px solid var(--accent);
-        background: var(--accent);
+        background: transparent;
         text-decoration: none;
         opacity: 0;
         transform: translateY(8px);
         transition:
           opacity 220ms ease 180ms,
           transform 260ms cubic-bezier(0.22, 1, 0.36, 1) 180ms,
-          background-color 120ms ease;
+          color 120ms ease,
+          background-color 120ms ease,
+          border-color 120ms ease;
       }
       .resume-section.is-resolved .resume-download {
         opacity: 1;
@@ -4116,8 +4177,15 @@
       }
       .resume-download:hover,
       .resume-download:focus-visible {
-        background: var(--on-surface);
+        color: var(--on-surface);
+        background: var(--hover-surface);
         border-color: var(--on-surface);
+      }
+      :root[data-theme="dark"] .resume-download:hover,
+      :root[data-theme="dark"] .resume-download:focus-visible {
+        color: var(--accent);
+        background: var(--hover-surface);
+        border-color: var(--accent);
       }
       .resume-download:focus-visible,
       .resume-preview:focus-visible {
@@ -4139,7 +4207,7 @@
           grid-template-columns: 1fr;
         }
         .resume-preview {
-          max-width: 180px;
+          max-width: 280px;
         }
       }
       .about-section,
@@ -5511,6 +5579,7 @@
         animReqId = null;
         audio.stopAll();
         audio.enabled = false; // belt-and-suspenders: no further sounds can fire
+        microNodesLayer.replaceChildren();
         window.removeEventListener("pointerdown", ensureAudioAndRun);
         window.removeEventListener("keydown", handleIntroKeydown);
         window.removeEventListener(
@@ -5648,7 +5717,7 @@
             });
 
             const revealTargets = document.querySelectorAll(
-              "[data-reveal-type], .coding-readout-cell, .community-record-header, .community-field, .community-photo-slot, .community-record-footer, .resume-header, .resume-body, .resume-download",
+                "[data-reveal-type], .coding-readout-cell, .community-record-header, .community-field, .community-quote-panel, .community-record-footer, .resume-header, .resume-body, .resume-download",
             );
             if (reducedMotion) {
               gsap.set(revealTargets, {
