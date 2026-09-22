@@ -210,3 +210,5 @@ The geometry across this system is completely unrounded (`roundedness: 0`). Curv
 
 ### Technical Drafting Callouts (Specialized)
 - Floating annotation nodes consisting of an anchor point (2x2px solid circle), a 45° angled leader line terminating in a horizontal shelf, and a JetBrains Mono metadata flag delivering contextual portfolio project specifications.
+
+

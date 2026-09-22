@@ -322,8 +322,7 @@
               <span
                 class="font-medium uppercase tracking-wider text-[13px]"
                 id="status-label"
-                >INITIALIZING 5.0S SEQUENCE...</span
-              >
+                >INITIALIZING 5.0S SEQUENCE...</span>
             </div>
           </div>
           <!-- SVG DRAFTING CANVAS (1200x675 Viewbox for perfect coordinate pinning) -->
@@ -462,13 +461,24 @@
       aria-labelledby="hero-title"
     >
       <div class="hero-grid" aria-hidden="true"></div>
+      <nav class="site-index" id="site-index" aria-label="Section navigation">
+        <a href="#about" data-index-target="about"><span>01</span> ABOUT</a>
+        <a href="#projects" data-index-target="projects"><span>02</span> PROJECTS</a>
+        <a href="#coding-profiles" data-index-target="coding-profiles"><span>03</span> CODE</a>
+        <a href="#social-community" data-index-target="social-community"><span>04</span> SOCIAL</a>
+        <a href="#resume" data-index-target="resume"><span>05</span> RESUME</a>
+        <a href="#footer-curtain" data-index-target="footer-curtain"><span>06</span> CONTACT</a>
+        <button type="button" class="site-index-theme" id="site-index-theme" aria-label="Switch color theme">
+          <span data-theme-choice="light">LIGHT</span><span data-theme-choice="dark">DARK</span>
+        </button>
+      </nav>
       <div class="hero-frame">
         <span class="hero-crop hero-crop-tl"></span>
         <span class="hero-crop hero-crop-tr"></span>
         <span class="hero-crop hero-crop-bl"></span>
         <span class="hero-crop hero-crop-br"></span>
         <header class="hero-hud hero-hud-top">
-          <span><i class="hero-status-node"></i>SECTION.01 // ARIN_PATEL</span
+          <span class="hero-hud-datum"><i class="hero-status-node"></i>SECTION.01 // ARIN_PATEL</span
           ><span class="hero-hud-controls"
             ><span>REV_1.0 <b>12C / 08C / 04C</b></span
             ><span class="theme-control"
@@ -539,6 +549,9 @@
             <span class="hero-coordinate">X: 0600.00 / Y: 0337.50</span>
           </div>
         </div>
+        <span class="hero-links-label hero-reveal" style="--reveal-delay: 340ms"
+          >EXTERNAL // PROFILES</span
+        >
         <nav
           class="hero-links hero-reveal"
           style="--reveal-delay: 360ms"
@@ -582,6 +595,18 @@
               A WORKING PROFILE / NOT A FINISHED SPEC
             </p>
           </header>
+          <figure
+            class="about-photo about-reveal"
+            data-reveal="subject-photo"
+            data-reveal-type="card"
+          >
+            <span class="about-photo-crop about-photo-crop-tl"></span>
+            <span class="about-photo-crop about-photo-crop-tr"></span>
+            <span class="about-photo-crop about-photo-crop-bl"></span>
+            <span class="about-photo-crop about-photo-crop-br"></span>
+            <img src="assets/arin-photo-bw.png" alt="Arin Patel" />
+            <figcaption>FIG. 01 // SUBJECT_PHOTO</figcaption>
+          </figure>
           <div
             class="about-spec-sheet about-reveal"
             data-reveal="spec"
@@ -1468,6 +1493,129 @@
           16px 16px,
           16px 16px;
       }
+      .site-index {
+        position: fixed;
+        top: 50%;
+        right: 22px;
+        z-index: 90;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 0;
+        border-left: 1px solid var(--border-subtle);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(8px, -50%);
+        transition:
+          opacity 260ms ease,
+          transform 260ms ease;
+      }
+      .site-index.is-visible {
+        opacity: 0.8;
+        pointer-events: auto;
+        transform: translate(0, -50%);
+      }
+      .site-index a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px 8px 14px;
+        color: var(--on-surface-muted);
+        font:
+          700 12px/1 "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        border-left: 2px solid transparent;
+        margin-left: -1px;
+        transition:
+          color 140ms ease,
+          border-color 140ms ease,
+          background-color 140ms ease;
+      }
+      .site-index a span {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .site-index a:hover,
+      .site-index a:focus-visible {
+        color: var(--on-surface);
+        background: var(--hover-surface);
+      }
+      .site-index a.is-active {
+        color: var(--on-surface);
+        background: var(--active-surface);
+        border-left-color: var(--accent);
+      }
+      .site-index:hover,
+      .site-index:focus-within {
+        opacity: 1;
+      }
+      .site-index-theme {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 6px;
+        padding: 7px 14px;
+        border: none;
+        border-top: 1px solid var(--border-subtle);
+        background: transparent;
+        color: var(--on-surface-muted);
+        font:
+          600 11px/1 "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+      }
+      .site-index-theme span {
+        transition: color 120ms ease;
+      }
+      .site-index-theme span[data-active="true"] {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      @media (max-width: 1023px) {
+        .site-index a {
+          padding-left: 10px;
+        }
+        .site-index a span + br {
+          display: none;
+        }
+        .site-index {
+          right: 12px;
+        }
+      }
+      @media (max-width: 767px) {
+        .site-index {
+          top: auto;
+          bottom: 18px;
+          right: 14px;
+          transform: translateY(8px);
+          flex-direction: row;
+          gap: 8px;
+          border-left: none;
+          padding: 0;
+          background: var(--surface);
+          border: 1px solid var(--border-subtle);
+          padding: 8px 10px;
+        }
+        .site-index.is-visible {
+          transform: translateY(0);
+        }
+        .site-index a {
+          padding: 0;
+          border-left: none;
+        }
+        .site-index a span {
+          display: block;
+        }
+        .site-index a:not(.is-active) {
+          display: none;
+        }
+        .site-index a.is-active {
+          display: flex;
+        }
+      }
       .hero-frame {
         position: relative;
         min-height: 100%;
@@ -1514,6 +1662,9 @@
           monospace;
         letter-spacing: 0.13em;
         text-transform: uppercase;
+      }
+      .hero-hud-datum {
+        opacity: 0.72;
       }
       .hero-hud-controls,
       .theme-control {
@@ -1806,11 +1957,22 @@
         letter-spacing: 0.06em;
       }
       .hero-coordinate {
-        color: var(--accent);
+        color: var(--on-surface-muted);
         font:
           500 13px "JetBrains Mono",
           monospace;
         letter-spacing: 0.08em;
+        opacity: 0.75;
+      }
+      .hero-links-label {
+        align-self: center;
+        width: min(760px, 100%);
+        margin: 0 auto -4px;
+        color: var(--on-surface-muted);
+        font:
+          500 12px/1.5 "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.14em;
       }
       .hero-links {
         align-self: center;
@@ -2218,9 +2380,63 @@
         }
       }
       .about-spec-sheet {
-        grid-column: 2 / span 6;
+        grid-column: 3 / span 5;
         align-self: start;
         padding-bottom: 4px;
+      }
+      .about-photo {
+        position: relative;
+        grid-column: 1 / span 2;
+        align-self: start;
+        margin: 0;
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-secondary);
+      }
+      .about-photo img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        object-position: center top;
+        mix-blend-mode: normal;
+      }
+      .about-photo figcaption {
+        padding: 8px;
+        border-top: 1px solid var(--border-subtle);
+        color: var(--on-surface-muted);
+        font:
+          500 12px/1.4 "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.08em;
+      }
+      .about-photo-crop {
+        position: absolute;
+        z-index: 1;
+        width: 12px;
+        height: 12px;
+        border-color: var(--accent);
+        border-style: solid;
+        pointer-events: none;
+      }
+      .about-photo-crop-tl {
+        top: -5px;
+        left: -5px;
+        border-width: 1px 0 0 1px;
+      }
+      .about-photo-crop-tr {
+        top: -5px;
+        right: -5px;
+        border-width: 1px 1px 0 0;
+      }
+      .about-photo-crop-bl {
+        bottom: 33px;
+        left: -5px;
+        border-width: 0 0 1px 1px;
+      }
+      .about-photo-crop-br {
+        right: -5px;
+        bottom: 33px;
+        border-width: 0 1px 1px 0;
       }
       .about-spec-row {
         display: grid;
@@ -2252,7 +2468,9 @@
         min-width: 0;
         padding: 20px;
         border: 1px solid var(--border);
-        background: var(--surface-secondary);
+        border-top: 2px solid var(--accent);
+        background: color-mix(in srgb, var(--surface-secondary) 92%, var(--accent) 8%);
+        box-shadow: 0 12px 32px -18px color-mix(in srgb, var(--accent) 45%, transparent);
         overflow: visible;
       }
       .about-chat::after {
@@ -2315,8 +2533,9 @@
       .about-chat-header {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         justify-content: space-between;
-        gap: 12px;
+        gap: 6px 12px;
         padding-bottom: 13px;
         border-bottom: 1px solid var(--border-subtle);
         color: var(--on-surface);
@@ -2324,11 +2543,11 @@
           500 13px/1.5 "JetBrains Mono",
           monospace;
         letter-spacing: 0.1em;
-        white-space: nowrap;
       }
       .about-chat-header > span {
-        overflow: hidden;
-        text-overflow: ellipsis;
+        min-width: 0;
+        white-space: normal;
+        overflow-wrap: break-word;
       }
       .about-chat-header strong {
         flex: 0 0 auto;
@@ -2348,7 +2567,7 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
-        height: 205px;
+        height: 270px;
         overflow-y: auto;
         padding: 16px 4px;
         background-image:
@@ -2356,6 +2575,14 @@
           linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px);
         background-size: 40px 40px;
         scrollbar-color: var(--accent) transparent;
+        scrollbar-width: thin;
+      }
+      .about-chat-log::-webkit-scrollbar {
+        width: 6px;
+      }
+      .about-chat-log::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 0;
       }
       .about-chat-message {
         max-width: 92%;
@@ -2372,6 +2599,17 @@
         align-self: flex-end;
         color: var(--accent);
         text-align: right;
+        animation: chat-query-arrive 200ms ease-out both;
+      }
+      @keyframes chat-query-arrive {
+        from {
+          opacity: 0;
+          transform: translateX(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
       }
       .about-chat-message::before {
         display: block;
@@ -2385,6 +2623,45 @@
       }
       .about-chat-message.user::before {
         content: "LOCAL // QUERY";
+      }
+      .about-chat-thinking {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        gap: 5px;
+        min-height: 18px;
+        color: var(--accent);
+      }
+      .about-chat-thinking::before {
+        content: "PROCESSING";
+        margin-right: 3px;
+        font:
+          500 10px/1 "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.12em;
+      }
+      .about-chat-thinking span {
+        width: 4px;
+        height: 4px;
+        background: var(--accent);
+        animation: chat-thinking-dot 600ms steps(2, end) infinite;
+      }
+      .about-chat-thinking span:nth-child(2) {
+        animation-delay: 100ms;
+      }
+      .about-chat-thinking span:nth-child(3) {
+        animation-delay: 200ms;
+      }
+      @keyframes chat-thinking-dot {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: scale(0.7);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
       .about-chat-form {
         display: grid;
@@ -2435,6 +2712,10 @@
       .about-chat-form button {
         color: var(--accent);
       }
+      .about-chat-form button:disabled {
+        cursor: wait;
+        opacity: 0.45;
+      }
       .about-chat-form button:hover,
       .about-chat-form button:focus-visible,
       .about-chat-suggestions button:hover,
@@ -2450,10 +2731,13 @@
       .about-chat-suggestions {
         display: flex;
         flex-wrap: wrap;
-        gap: 7px;
-        padding-top: 14px;
+        gap: 8px;
+        margin-top: 10px;
+        padding-top: 20px;
+        border-top: 1px dashed var(--border-subtle);
       }
       .about-chat-suggestions button {
+        position: relative;
         color: var(--on-surface-muted);
         font:
           500 13px/1.4 "JetBrains Mono",
@@ -2461,19 +2745,94 @@
         letter-spacing: 0.04em;
         text-align: left;
       }
+      .about-chat-suggestions button::before,
+      .about-chat-suggestions button::after {
+        content: "";
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 120ms ease;
+      }
+      .about-chat-suggestions button::before {
+        top: -3px;
+        left: -3px;
+        border-top: 1px solid var(--accent);
+        border-left: 1px solid var(--accent);
+      }
+      .about-chat-suggestions button::after {
+        right: -3px;
+        bottom: -3px;
+        border-right: 1px solid var(--accent);
+        border-bottom: 1px solid var(--accent);
+      }
       .about-chat-suggestions button:hover,
       .about-chat-suggestions button:focus-visible {
         color: var(--accent);
       }
+      .about-chat-suggestions button:hover::before,
+      .about-chat-suggestions button:hover::after,
+      .about-chat-suggestions button:focus-visible::before,
+      .about-chat-suggestions button:focus-visible::after {
+        opacity: 1;
+      }
+      .chat-control-press {
+        animation: chat-control-press 120ms ease-out both;
+      }
+      @keyframes chat-control-press {
+        50% {
+          transform: scale(0.97);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .about-chat-message.user,
+        .about-chat-thinking span,
+        .chat-control-press {
+          animation: none;
+        }
+      }
       @media (max-width: 1279px) {
+        .about-photo {
+          grid-column: 1 / span 2;
+        }
         .about-spec-sheet {
-          grid-column: 1 / span 4;
+          grid-column: 3 / span 3;
         }
         .about-chat {
           grid-column: 6 / span 3;
         }
       }
+      @media (min-width: 768px) and (max-width: 1023px) {
+        .about-inner {
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 20px;
+          padding-inline: 32px;
+        }
+        .about-heading {
+          grid-column: 1 / -1;
+        }
+        .about-photo {
+          grid-column: 1 / span 2;
+        }
+        .about-spec-sheet {
+          grid-column: 3 / span 4;
+        }
+        .about-chat {
+          grid-column: 1 / -1;
+          margin-top: 0;
+        }
+        .about-journey {
+          grid-column: 1 / -1;
+          margin-top: 36px;
+        }
+      }
       @media (max-width: 767px) {
+        .about-photo {
+          grid-column: 1 / -1;
+          width: min(100%, 260px);
+          margin-top: 44px;
+        }
         .about-spec-sheet,
         .about-chat {
           grid-column: 1 / -1;
@@ -2610,10 +2969,6 @@
         opacity: 1;
         transform: scale(1);
       }
-      .skills-chip:hover {
-        color: var(--accent);
-        border-color: var(--accent);
-      }
       .skills-currently-learning {
         border-bottom: 0;
         border-top: 1px solid var(--accent);
@@ -2631,10 +2986,6 @@
         color: var(--on-surface-secondary);
         border-style: dashed;
         border-color: var(--border-subtle);
-      }
-      .skills-currently-learning .skills-chip:hover {
-        color: var(--accent);
-        border-color: var(--accent);
       }
       @media (max-width: 767px) {
         .skills-tools-section {
@@ -2884,17 +3235,25 @@
           padding 520ms cubic-bezier(0.22, 1, 0.36, 1);
       }
       .project-entry-foot a {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 14px;
         color: var(--accent);
+        border: 1px solid var(--accent);
         font:
-          500 13px/1.5 "JetBrains Mono",
+          600 13px/1.5 "JetBrains Mono",
           monospace;
         letter-spacing: 0.13em;
         text-decoration: none;
+        transition:
+          background-color 140ms ease,
+          color 140ms ease;
       }
       .project-entry-foot a:hover,
       .project-entry-foot a:focus-visible {
-        text-decoration: underline;
-        text-underline-offset: 4px;
+        color: var(--on-accent);
+        background-color: var(--accent);
+        text-decoration: none;
       }
       .project-archive {
         grid-column: 4 / span 8;
@@ -3012,21 +3371,32 @@
         transform-origin: left;
       }
       .project-entry[data-open="true"]::before,
-      .project-entry[data-open="true"]::after {
+      .project-entry[data-open="true"]::after,
+      .project-entry:hover::before,
+      .project-entry:hover::after {
         opacity: 1;
         transform: translate(0, 0);
       }
-      .project-entry[data-open="true"]::after {
+      .project-entry[data-open="true"]::after,
+      .project-entry:hover::after {
         transform: scaleX(1);
       }
       .project-entry:hover {
         background: var(--hover-surface);
+        border-color: var(--accent);
+      }
+      .project-entry:hover .project-entry-status {
+        color: var(--accent);
+      }
+      .project-entry:hover .project-number {
+        color: var(--on-surface);
       }
       .project-number {
         color: var(--accent);
         font:
           800 48px/0.8 "Barlow Condensed",
           sans-serif;
+        transition: color 140ms ease;
       }
       .project-entry h3 {
         margin: 0 0 8px;
@@ -3046,9 +3416,29 @@
       }
       .project-entry-status {
         justify-self: end;
-        color: var(--on-surface-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        font-weight: 600;
         font-size: 13px;
         text-align: right;
+        transition: color 140ms ease;
+      }
+      .project-entry-status::after {
+        content: "->";
+        display: inline-block;
+        color: var(--accent);
+        opacity: 0.55;
+        transform: translateX(0);
+        transition:
+          opacity 180ms ease,
+          transform 180ms ease;
+      }
+      .project-entry:hover .project-entry-status::after,
+      .project-entry[data-open="true"] .project-entry-status::after {
+        opacity: 1;
+        transform: translateX(3px);
       }
       .project-card:focus-visible {
         outline: 1px solid var(--focus-ring);
@@ -3306,16 +3696,16 @@
       .coding-panel-header {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         justify-content: space-between;
-        gap: 16px;
+        gap: 6px 16px;
         padding-bottom: 14px;
         border-bottom: 1px solid var(--border-subtle);
-        white-space: nowrap;
       }
       .coding-panel-header > span {
         min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: normal;
+        overflow-wrap: break-word;
       }
       .coding-panel-header strong {
         flex: 0 0 auto;
@@ -3845,7 +4235,7 @@
         margin-top: 20px;
         color: var(--on-surface-muted);
         font:
-          500 11px/1.5 "JetBrains Mono",
+          500 12px/1.5 "JetBrains Mono",
           monospace;
         font-style: normal;
         letter-spacing: 0.08em;
@@ -3858,7 +4248,7 @@
         border-top: 1px solid var(--border-subtle);
         color: var(--on-surface-muted);
         font:
-          500 11px/1.5 "JetBrains Mono",
+          500 12px/1.5 "JetBrains Mono",
           monospace;
         letter-spacing: 0.06em;
       }
@@ -4084,9 +4474,9 @@
       }
       .resume-body {
         display: grid;
-        grid-template-columns: minmax(260px, 280px) minmax(0, 1fr);
+        grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
         align-items: start;
-        gap: 24px;
+        gap: 32px;
         padding-top: 20px;
       }
       .resume-preview {
@@ -5285,6 +5675,7 @@
       // Theme state defaults to light and persists the instrument switch locally.
       const themeRoot = document.documentElement;
       const themeToggle = document.getElementById("theme-toggle");
+      const siteIndexTheme = document.getElementById("site-index-theme");
       let savedTheme = null;
       try {
         savedTheme = localStorage.getItem("arin-theme");
@@ -5302,12 +5693,21 @@
           "aria-pressed",
           theme === "dark" ? "true" : "false",
         );
-        themeToggle
-          .querySelectorAll("[data-theme-choice]")
-          .forEach((choice) => {
-            choice.dataset.active =
-              choice.dataset.themeChoice === theme ? "true" : "false";
-          });
+        [themeToggle, siteIndexTheme].forEach((control) => {
+          if (!control) return;
+          control
+            .querySelectorAll("[data-theme-choice]")
+            .forEach((choice) => {
+              choice.dataset.active =
+                choice.dataset.themeChoice === theme ? "true" : "false";
+            });
+        });
+        if (siteIndexTheme) {
+          siteIndexTheme.setAttribute(
+            "aria-pressed",
+            theme === "dark" ? "true" : "false",
+          );
+        }
       }
 
       applyTheme(initialTheme);
@@ -5318,6 +5718,18 @@
         event.stopPropagation();
         applyTheme(themeRoot.dataset.theme === "dark" ? "light" : "dark", true);
       });
+      if (siteIndexTheme) {
+        siteIndexTheme.addEventListener("pointerdown", (event) =>
+          event.stopPropagation(),
+        );
+        siteIndexTheme.addEventListener("click", (event) => {
+          event.stopPropagation();
+          applyTheme(
+            themeRoot.dataset.theme === "dark" ? "light" : "dark",
+            true,
+          );
+        });
+      }
 
       const projectStage = document.getElementById("project-stage");
       const projectGrid = document.getElementById("project-grid");
@@ -5482,14 +5894,65 @@
       const aboutChatLog = document.getElementById("about-chat-log");
       const aboutChatForm = document.getElementById("about-chat-form");
       const aboutChatInput = document.getElementById("about-chat-input");
+      const aboutChatSendButton = aboutChatForm.querySelector(
+        'button[type="submit"]',
+      );
+      let isChatProcessing = false;
+
+      function scrollChatToLatest() {
+        aboutChatLog.scrollTo({
+          top: aboutChatLog.scrollHeight,
+          behavior: "smooth",
+        });
+      }
 
       function appendChatMessage(text, type) {
         const message = document.createElement("p");
         message.className = `about-chat-message ${type}`;
         message.textContent = text;
         aboutChatLog.appendChild(message);
-        aboutChatLog.scrollTop = aboutChatLog.scrollHeight;
+        scrollChatToLatest();
         return message;
+      }
+
+      function appendThinkingIndicator() {
+        const indicator = document.createElement("div");
+        indicator.className = "about-chat-thinking";
+        indicator.setAttribute("role", "status");
+        indicator.setAttribute("aria-label", "Processing query");
+        indicator.innerHTML = "<span></span><span></span><span></span>";
+        aboutChatLog.appendChild(indicator);
+        scrollChatToLatest();
+        return indicator;
+      }
+
+      function wait(milliseconds) {
+        return new Promise((resolve) =>
+          window.setTimeout(resolve, milliseconds),
+        );
+      }
+
+      function typeChatResponse(text) {
+        const message = appendChatMessage("", "bot");
+        return new Promise((resolve) => {
+          let characterIndex = 0;
+          const typeTimer = window.setInterval(() => {
+            message.textContent += text[characterIndex];
+            characterIndex += 1;
+            scrollChatToLatest();
+            if (characterIndex >= text.length) {
+              window.clearInterval(typeTimer);
+              resolve();
+            }
+          }, 18);
+        });
+      }
+
+      function playChatControlPress(control) {
+        control.classList.remove("chat-control-press");
+        void control.offsetWidth;
+        control.classList.add("chat-control-press");
+        return wait(120);
       }
 
       function typeChatGreeting() {
@@ -5502,54 +5965,86 @@
         const typeTimer = window.setInterval(() => {
           message.textContent += greeting[characterIndex];
           characterIndex += 1;
-          aboutChatLog.scrollTop = aboutChatLog.scrollHeight;
+          scrollChatToLatest();
           if (characterIndex >= greeting.length) {
             window.clearInterval(typeTimer);
           }
         }, 20);
       }
 
-      async function requestAssistantReply(query) {
-        const fallback =
-          "Having trouble reaching the instrument right now - try the Contact section below.";
-
-        try {
-          if (query.length > 300) {
-            return "Please keep your query under 300 characters.";
-          }
-
-          const response = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query }),
+      function requestAssistantReply(query) {
+        const faqEntries = [
+          {
+            keywords: ["projects", "project", "built", "what has arin made"],
+            answer:
+              "Arin has built three main projects: ProjectMentor AI (an AI feasibility tool using Gemini), ChatApp (a real-time chat app with room codes), and CivicOS (a municipal incident-management platform built for Smart India Hackathon 2026, where Arin was Mobile Lead on a 6-person team). Check the Projects section above for details and live links.",
+          },
+          {
+            keywords: ["learning", "currently studying", "focus"],
+            answer:
+              "Arin is currently strengthening DSA, exploring Generative AI, and building with the MERN stack — see the Learning Journey and Skills sections for the full picture.",
+          },
+          {
+            keywords: ["coding", "leetcode", "practice"],
+            answer:
+              "Arin has solved 110 problems on LeetCode (leetcode.com/u/Aarin1) and stays active on GitHub with 355+ contributions. Focus areas include Arrays, Strings, Binary Search, and Trees.",
+          },
+          {
+            keywords: ["internship", "open to", "hiring", "available"],
+            answer:
+              "Yes — Arin is a 2nd-year B.Tech AI & ML student open to internship opportunities. Check the Contact section to get in touch.",
+          },
+          {
+            keywords: ["education", "degree", "cgpa", "university"],
+            answer:
+              "Arin is pursuing a B.Tech in Artificial Intelligence & Machine Learning at Parul University, Vadodara, currently in 2nd year (3rd semester), CGPA 7.46.",
+          },
+        ];
+        const normalizedQuery = query.toLowerCase();
+        const bestMatch = faqEntries
+          .map((entry) => ({
+            ...entry,
+            score: entry.keywords.reduce(
+              (total, keyword) =>
+                total + Number(normalizedQuery.includes(keyword)),
+              0,
+            ),
+          }))
+          .reduce((best, entry) => (entry.score > best.score ? entry : best), {
+            score: 0,
           });
-          if (!response.ok) throw new Error("Chat request failed");
 
-          const data = await response.json();
-          return typeof data.reply === "string" && data.reply.trim()
-            ? data.reply
-            : fallback;
-        } catch (error) {
-          return fallback;
-        }
+        return bestMatch.score
+          ? bestMatch.answer
+          : "Not sure I've got a good answer for that one — try the Contact section or download the resume above for more detail.";
       }
 
       async function submitChatQuery(query) {
         const normalizedQuery = query.trim();
-        if (!normalizedQuery) return;
+        if (!normalizedQuery || isChatProcessing) return;
+        isChatProcessing = true;
+        aboutChatSendButton.disabled = true;
         appendChatMessage(normalizedQuery, "user");
         aboutChatInput.value = "";
-        const response = await requestAssistantReply(normalizedQuery);
-        appendChatMessage(response, "bot");
+        const thinkingIndicator = appendThinkingIndicator();
+        await wait(500);
+        thinkingIndicator.remove();
+        await typeChatResponse(requestAssistantReply(normalizedQuery));
+        isChatProcessing = false;
+        aboutChatSendButton.disabled = false;
       }
 
-      aboutChatForm.addEventListener("submit", (event) => {
+      aboutChatForm.addEventListener("submit", async (event) => {
         event.preventDefault();
+        if (isChatProcessing || !aboutChatInput.value.trim()) return;
+        await playChatControlPress(aboutChatSendButton);
         submitChatQuery(aboutChatInput.value);
       });
       document.querySelectorAll("[data-chat-prompt]").forEach((prompt) => {
-        prompt.addEventListener("click", () => {
+        prompt.addEventListener("click", async () => {
+          if (isChatProcessing) return;
           aboutChatInput.value = prompt.dataset.chatPrompt;
+          await playChatControlPress(prompt);
           submitChatQuery(aboutChatInput.value);
         });
       });
@@ -5643,6 +6138,78 @@
           });
         };
 
+        // Sticky section-index nav: shows once the visitor scrolls past the
+        // hero, highlights whichever section is currently in view, and
+        // smooth-scrolls (through Lenis, since `hero` is the real scroll
+        // container) when a link is clicked.
+        const siteIndex = document.getElementById("site-index");
+        if (siteIndex) {
+          const indexLinks = Array.from(siteIndex.querySelectorAll("a"));
+          const heroTitle = document.getElementById("hero-title");
+
+          const setActiveIndexLink = (id) => {
+            indexLinks.forEach((link) => {
+              link.classList.toggle(
+                "is-active",
+                link.dataset.indexTarget === id,
+              );
+            });
+          };
+
+          indexLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+              event.preventDefault();
+              const targetId = link.dataset.indexTarget;
+              const targetEl = document.getElementById(targetId);
+              if (!targetEl) return;
+              if (portfolioLenis) {
+                portfolioLenis.scrollTo(targetEl, {
+                  offset: -24,
+                  duration: 1,
+                });
+              } else {
+                targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+              setActiveIndexLink(targetId);
+            });
+          });
+
+          const sectionEls = indexLinks
+            .map((link) => document.getElementById(link.dataset.indexTarget))
+            .filter(Boolean);
+
+          // Give the nav a real default active state immediately (the
+          // first tracked section) rather than showing no current-page
+          // indicator at all until the visitor scrolls far enough to
+          // trigger the observer below.
+          if (sectionEls[0]) setActiveIndexLink(sectionEls[0].id);
+
+          const sectionObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  setActiveIndexLink(entry.target.id);
+                }
+              });
+            },
+            { root: hero, rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+          );
+          sectionEls.forEach((el) => sectionObserver.observe(el));
+
+          const visibilityObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                siteIndex.classList.toggle(
+                  "is-visible",
+                  !entry.isIntersecting,
+                );
+              });
+            },
+            { root: hero, threshold: 0, rootMargin: "-70% 0px 0px 0px" },
+          );
+          if (heroTitle) visibilityObserver.observe(heroTitle);
+        }
+
         window.revealActiveProjectMedia = () => {
           const media = document.querySelector(
             "#project-stage .project-featured img, #project-stage .project-featured picture, #project-stage .project-featured .project-screenshot",
@@ -5680,10 +6247,29 @@
             ].join(", ");
             const headingSplits = [];
             document.querySelectorAll(headingSelector).forEach((heading) => {
+              // Capture a correctly-spaced label before SplitText tears the
+              // heading apart — its own auto-generated aria-label reads
+              // textContent directly and doesn't treat a <br> as a word
+              // boundary, so "ABOUT<br>THE BUILDER" was being announced to
+              // screen readers as "ABOUTTHE BUILDER". Build the real label
+              // from each child text/line, joined with spaces, instead.
+              const accessibleLabel = Array.from(heading.childNodes)
+                .map((node) =>
+                  node.nodeType === Node.TEXT_NODE
+                    ? node.textContent
+                    : node.tagName === "BR"
+                      ? " "
+                      : node.textContent,
+                )
+                .join("")
+                .replace(/\s+/g, " ")
+                .trim();
+
               const split = SplitText.create(heading, {
                 type: "words",
                 wordsClass: "gsap-heading-word",
               });
+              heading.setAttribute("aria-label", accessibleLabel);
               headingSplits.push(split);
               if (reducedMotion) {
                 gsap.set(split.words, { clearProps: "all" });
@@ -5717,7 +6303,7 @@
             });
 
             const revealTargets = document.querySelectorAll(
-                "[data-reveal-type], .coding-readout-cell, .community-record-header, .community-field, .community-quote-panel, .community-record-footer, .resume-header, .resume-body, .resume-download",
+              "[data-reveal-type], .coding-readout-cell, .community-record-header, .community-field, .community-quote-panel, .community-record-footer, .resume-header, .resume-body, .resume-download",
             );
             if (reducedMotion) {
               gsap.set(revealTargets, {
