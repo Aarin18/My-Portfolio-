@@ -53,6 +53,14 @@
         --streak-blend: multiply;
         --font-size-base: clamp(14px, 1vw, 16px);
         --font-size-skills: clamp(14px, 1.2vw, 18px);
+        --fs-xs: 12px;
+        --fs-sm: 13px;
+        --fs-base: 16px;
+        --fs-md: 20px;
+        --fs-lg: 24px;
+        --fs-xl: 32px;
+        --fs-2xl: 48px;
+        --fs-display: clamp(68px, 8vw, 120px);
       }
 
       :root[data-theme="dark"] {
@@ -270,21 +278,16 @@
             <div class="flex items-center gap-2.5">
               <span class="inline-block w-2 h-2" id="status-blinker"></span>
               <span class="font-semibold tracking-widest text-[13px]"
-                >SYS.INIT // CALIBRATION_LOADER</span
+                ></span
               >
             </div>
             <div class="flex items-center gap-5">
               <span
                 class="hidden sm:inline-block tracking-widest font-medium text-[13px]"
-                >ASPECT: 16:9_SAFE</span
+                ></span
               >
               <span id="sound-hint" aria-live="polite"
-                >[ SOUND: TAP TO ENABLE ]</span
-              >
-              <span
-                class="font-bold font-mono tabular-nums tracking-wider text-[13px]"
-                id="timer-display"
-                >00:00.00s</span
+                ></span
               >
             </div>
           </header>
@@ -300,7 +303,7 @@
               <div class="flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 inline-block"></span>
                 <span class="font-medium text-[13px] tracking-wide"
-                  >NODE_SYS</span
+                  ></span
                 >
               </div>
               <div class="flex items-center gap-1.5">
@@ -308,21 +311,15 @@
                   class="w-2 h-2 rounded-full border bg-transparent inline-block"
                 ></span>
                 <span class="font-medium text-[13px] tracking-wide"
-                  >OPTICAL_AXIS</span
+                  ></span
                 >
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="w-3 h-[1px] inline-block"></span>
                 <span class="font-medium text-[13px] tracking-wide"
-                  >DATUM_ALIGN</span
+                  ></span
                 >
               </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <span
-                class="font-medium uppercase tracking-wider text-[13px]"
-                id="status-label"
-                >INITIALIZING 5.0S SEQUENCE...</span>
             </div>
           </div>
           <!-- SVG DRAFTING CANVAS (1200x675 Viewbox for perfect coordinate pinning) -->
@@ -367,7 +364,6 @@
                 x="180"
                 y="204"
               >
-                CAP_DATUM +110.0
               </text>
               <!-- Line 1 Baseline -->
               <line
@@ -388,7 +384,6 @@
                 x="970"
                 y="350"
               >
-                L1_BASE [355]
               </text>
               <!-- Line 2 Midline & Baseline -->
               <line
@@ -410,7 +405,6 @@
                 x="290"
                 y="416"
               >
-                SECONDARY_DATUM // AXIS-02
               </text>
             </g>
             <!-- Blue HUD Micro-elements (spring pop-in nodes & brackets) -->
@@ -468,9 +462,6 @@
         <a href="#social-community" data-index-target="social-community"><span>04</span> SOCIAL</a>
         <a href="#resume" data-index-target="resume"><span>05</span> RESUME</a>
         <a href="#footer-curtain" data-index-target="footer-curtain"><span>06</span> CONTACT</a>
-        <button type="button" class="site-index-theme" id="site-index-theme" aria-label="Switch color theme">
-          <span data-theme-choice="light">LIGHT</span><span data-theme-choice="dark">DARK</span>
-        </button>
       </nav>
       <div class="hero-frame">
         <span class="hero-crop hero-crop-tl"></span>
@@ -478,9 +469,8 @@
         <span class="hero-crop hero-crop-bl"></span>
         <span class="hero-crop hero-crop-br"></span>
         <header class="hero-hud hero-hud-top">
-          <span class="hero-hud-datum"><i class="hero-status-node"></i>SECTION.01 // ARIN_PATEL</span
-          ><span class="hero-hud-controls"
-            ><span>REV_1.0 <b>12C / 08C / 04C</b></span
+          <span class="hero-hud-datum"><i class="hero-status-node"></i>Section 01 // Arin Patel</span>
+          <span class="hero-hud-controls"
             ><span class="theme-control"
               ><span>MODE:</span
               ><button
@@ -503,12 +493,12 @@
             ><span class="hero-index-label">IDENTITY<br />PLATE</span>
           </aside>
           <div class="hero-copy hero-reveal" style="--reveal-delay: 160ms">
-            <p class="hero-kicker">CSE // AI &amp; MACHINE LEARNING</p>
+            <p class="hero-kicker">CSE // AI &amp; Machine Learning</p>
             <h1 id="hero-title">ARIN<br /><em>PATEL</em></h1>
             <div class="hero-datum" aria-hidden="true">
               <span></span><span>CAP_HT +104</span><span></span>
             </div>
-            <p class="hero-role">AI/ML + SOFTWARE DEVELOPER</p>
+            <p class="hero-role">AI/ML + Software Developer</p>
             <p class="hero-positioning">
               I am a 2nd-year CSE AI/ML student building practical projects,
               solving problems with DSA, and learning how full-stack systems
@@ -530,13 +520,13 @@
               >
             </div>
             <div class="hero-meta">
-              <span>FOCUS: DSA / MERN / AI-ML</span
-              ><span>NEXT: INTERNSHIPS</span>
+              <span>Focus: DSA / MERN / AI-ML</span
+              ><span>Next: Internships</span>
             </div>
           </div>
           <div class="hero-inspector hero-reveal" style="--reveal-delay: 260ms">
             <div class="hero-inspector-head">
-              <span>PROFILE_SPEC</span><strong>REV_1.0</strong>
+              <span>PROFILE_SPEC</span><strong aria-hidden="true">REV_1.0</strong>
             </div>
             <div class="hero-spec-list">
               <div><span>LOCATION</span><strong>GUJARAT, INDIA</strong></div>
@@ -546,7 +536,7 @@
               <div><span>STAGE</span><strong>2ND YEAR / 3RD SEM</strong></div>
               <div><span>STATUS</span><strong>OPEN TO INTERNSHIPS</strong></div>
             </div>
-            <span class="hero-coordinate">X: 0600.00 / Y: 0337.50</span>
+            <span class="hero-coordinate" aria-hidden="true">X: 0600.00 / Y: 0337.50</span>
           </div>
         </div>
         <span class="hero-links-label hero-reveal" style="--reveal-delay: 340ms"
@@ -605,7 +595,7 @@
             <span class="about-photo-crop about-photo-crop-bl"></span>
             <span class="about-photo-crop about-photo-crop-br"></span>
             <img src="assets/arin-photo-bw.png" alt="Arin Patel" />
-            <figcaption>FIG. 01 // SUBJECT_PHOTO</figcaption>
+            <figcaption>Fig. 01 // Profile Photo</figcaption>
           </figure>
           <div
             class="about-spec-sheet about-reveal"
@@ -661,7 +651,7 @@
                 name="query"
                 type="text"
                 autocomplete="off"
-                placeholder="ENTER A PROFILE QUERY..."
+                placeholder="Enter a profile query..."
               />
               <button type="submit">[ SEND ]</button>
             </form>
@@ -929,7 +919,7 @@
                 href="https://github.com/Aarin18"
                 target="_blank"
                 rel="noreferrer"
-                >[ VIEW PROFILE -&gt; ]</a
+                >[ View Profile -&gt; ]</a
               >
             </article>
             <article
@@ -1014,7 +1004,7 @@
                 href="https://leetcode.com/u/Aarin1/"
                 target="_blank"
                 rel="noreferrer"
-                >[ VIEW PROFILE -&gt; ]</a
+                >[ View Profile -&gt; ]</a
               >
             </article>
           </div>
@@ -1042,7 +1032,7 @@
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">CLAUDE 101</h3>
+                  <h3 class="cert-title">Claude 101</h3>
                   <span class="cert-issuer">ISSUER: ANTHROPIC</span>
                 </div>
                 <span class="cert-badge">COMPLETED</span>
@@ -1054,7 +1044,7 @@
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">CLAUDE PLATFORM 101</h3>
+                  <h3 class="cert-title">Claude Platform 101</h3>
                   <span class="cert-issuer">ISSUER: ANTHROPIC</span>
                 </div>
                 <span class="cert-badge">COMPLETED</span>
@@ -1066,7 +1056,7 @@
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">CLAUDE CODE 101</h3>
+                  <h3 class="cert-title">Claude Code 101</h3>
                   <span class="cert-issuer">ISSUER: ANTHROPIC</span>
                 </div>
                 <span class="cert-badge">COMPLETED</span>
@@ -1078,7 +1068,7 @@
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">HTML AND CSS</h3>
+                  <h3 class="cert-title">HTML &amp; CSS</h3>
                   <span class="cert-issuer"
                     >IT SPECIALIST // CERTIPORT (PEARSON VUE)</span
                   >
@@ -1092,7 +1082,7 @@
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">PYTHON ASSESSMENT</h3>
+                  <h3 class="cert-title">Python Assessment</h3>
                   <span class="cert-issuer"
                     >PROFESSIONAL LEVEL // SKILLUPRISE</span
                   >
@@ -1107,7 +1097,7 @@
               <div class="cert-card-header">
                 <div>
                   <h3 class="cert-title">
-                    RED HAT SYSTEM ADMINISTRATION I (RH124)
+                    Red Hat System Administration I (RH124)
                   </h3>
                   <span class="cert-issuer">RED HAT // 40 CREDIT HOURS</span>
                 </div>
@@ -1122,7 +1112,7 @@
             <article class="cert-card">
               <div class="cert-card-header">
                 <div>
-                  <h3 class="cert-title">JAVASCRIPT</h3>
+                  <h3 class="cert-title">JavaScript</h3>
                   <span class="cert-issuer"
                     >IT SPECIALIST // CERTIPORT (PEARSON VUE)</span
                   >
@@ -1137,7 +1127,7 @@
               <div class="cert-card-header">
                 <div>
                   <h3 class="cert-title">
-                    RED HAT SYSTEM ADMINISTRATION II (RH134 - RHA) - VER. 10
+                    Red Hat System Administration II (RH134 - RHA) - Ver. 10
                   </h3>
                   <span class="cert-issuer">RED HAT // 40 CREDIT HOURS</span>
                 </div>
@@ -1407,11 +1397,11 @@
           <div class="footer-inner">
             <div class="footer-marquee" aria-label="Portfolio status">
               <div class="footer-marquee-track">
-                AVAILABLE FOR OPPORTUNITIES <span>✦</span> B.TECH AI &amp; ML
-                <span>✦</span> PARUL UNIVERSITY <span>✦</span> OPEN TO
-                INTERNSHIPS <span>✦</span> AVAILABLE FOR OPPORTUNITIES
-                <span>✦</span> B.TECH AI &amp; ML <span>✦</span> PARUL
-                UNIVERSITY <span>✦</span> OPEN TO INTERNSHIPS <span>✦</span>
+                AVAILABLE FOR OPPORTUNITIES <span aria-hidden="true">•</span> B.TECH AI &amp; ML
+                <span aria-hidden="true">•</span> PARUL UNIVERSITY <span aria-hidden="true">•</span> OPEN TO
+                INTERNSHIPS <span aria-hidden="true">•</span> AVAILABLE FOR OPPORTUNITIES
+                <span aria-hidden="true">•</span> B.TECH AI &amp; ML <span aria-hidden="true">•</span> PARUL
+                UNIVERSITY <span aria-hidden="true">•</span> OPEN TO INTERNSHIPS <span aria-hidden="true">•</span>
               </div>
             </div>
             <div class="footer-center">
@@ -1500,9 +1490,12 @@
         z-index: 90;
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 4px;
         padding: 10px 0;
-        border-left: 1px solid var(--border-subtle);
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: 4px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         opacity: 0;
         pointer-events: none;
         transform: translate(8px, -50%);
@@ -1511,7 +1504,7 @@
           transform 260ms ease;
       }
       .site-index.is-visible {
-        opacity: 0.8;
+        opacity: 1;
         pointer-events: auto;
         transform: translate(0, -50%);
       }
@@ -1519,15 +1512,14 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 8px 10px 8px 14px;
-        color: var(--on-surface-muted);
+        padding: 8px 14px;
+        color: var(--on-surface);
         font:
-          700 12px/1 "JetBrains Mono",
+          600 var(--fs-sm)/1 "JetBrains Mono",
           monospace;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.08em;
         text-decoration: none;
-        border-left: 2px solid transparent;
-        margin-left: -1px;
+        border-left: 3px solid transparent;
         transition:
           color 140ms ease,
           border-color 140ms ease,
@@ -1539,13 +1531,14 @@
       }
       .site-index a:hover,
       .site-index a:focus-visible {
-        color: var(--on-surface);
+        color: var(--accent);
         background: var(--hover-surface);
       }
       .site-index a.is-active {
-        color: var(--on-surface);
+        color: var(--accent);
         background: var(--active-surface);
         border-left-color: var(--accent);
+        font-weight: 700;
       }
       .site-index:hover,
       .site-index:focus-within {
@@ -1567,8 +1560,12 @@
         letter-spacing: 0.1em;
         cursor: pointer;
       }
-      .site-index-theme span {
+      .site-index-theme span[data-theme-choice] {
         transition: color 120ms ease;
+      }
+      .site-index-theme .theme-divider {
+        color: var(--border-subtle);
+        user-select: none;
       }
       .site-index-theme span[data-active="true"] {
         color: var(--accent);
@@ -1665,6 +1662,7 @@
       }
       .hero-hud-datum {
         opacity: 0.72;
+        text-transform: none;
       }
       .hero-hud-controls,
       .theme-control {
@@ -1787,9 +1785,10 @@
         margin: 0 0 22px;
         color: var(--accent);
         font:
-          500 13px/1.4 "JetBrains Mono",
+          500 var(--fs-sm)/1.4 "JetBrains Mono",
           monospace;
         letter-spacing: 0.14em;
+        text-transform: none;
       }
       .hero-copy h1 {
         position: relative;
@@ -1929,8 +1928,9 @@
         letter-spacing: 0.12em;
       }
       .hero-inspector-head strong {
-        color: var(--accent);
-        font-weight: 500;
+        color: var(--on-surface-muted);
+        font: 500 var(--fs-xs) "JetBrains Mono", monospace;
+        opacity: 0.7;
       }
       .hero-spec-list {
         display: grid;
@@ -1959,10 +1959,10 @@
       .hero-coordinate {
         color: var(--on-surface-muted);
         font:
-          500 13px "JetBrains Mono",
+          500 var(--fs-xs) "JetBrains Mono",
           monospace;
         letter-spacing: 0.08em;
-        opacity: 0.75;
+        opacity: 0.45;
       }
       .hero-links-label {
         align-self: center;
@@ -1977,22 +1977,26 @@
       .hero-links {
         align-self: center;
         width: min(760px, 100%);
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
         border-top: 1px solid var(--border);
+        padding-top: 14px;
       }
       .hero-links a {
         position: relative;
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 16px 12px;
+        gap: 10px;
+        padding: 10px 18px;
         color: var(--on-surface);
-        border-right: 1px solid var(--border-subtle);
+        border: 1px solid var(--border-subtle);
+        border-radius: 2px;
         font:
-          600 13px "JetBrains Mono",
+          600 var(--fs-sm) "JetBrains Mono",
           monospace;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.08em;
         text-decoration: none;
       }
       .hero-links a:first-child {
@@ -2405,9 +2409,10 @@
         border-top: 1px solid var(--border-subtle);
         color: var(--on-surface-muted);
         font:
-          500 12px/1.4 "JetBrains Mono",
+          500 var(--fs-xs)/1.4 "JetBrains Mono",
           monospace;
         letter-spacing: 0.08em;
+        text-transform: none;
       }
       .about-photo-crop {
         position: absolute;
@@ -2666,47 +2671,71 @@
       .about-chat-form {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
-        gap: 8px;
+        gap: 12px;
         align-items: center;
-        padding-top: 14px;
-        border-top: 1px solid var(--border-subtle);
+        padding: 12px 14px;
+        margin-top: 14px;
+        border: 2px solid var(--accent);
+        border-radius: 4px;
+        background: var(--surface-secondary);
+        box-shadow: 0 2px 8px rgba(40, 82, 235, 0.1);
       }
       .about-chat-prompt,
-      .about-chat-form input,
-      .about-chat-form button {
+      .about-chat-form input {
         color: var(--on-surface);
         font:
-          500 13px/1.4 "JetBrains Mono",
+          500 var(--fs-base) "JetBrains Mono",
           monospace;
         letter-spacing: 0.04em;
       }
       .about-chat-prompt {
         color: var(--accent);
+        font-weight: 700;
       }
       .about-chat-form input {
         width: 100%;
         min-width: 0;
-        padding: 8px 0;
-        border: 0;
-        border-bottom: 1px solid var(--border-subtle);
-        border-radius: 0;
+        padding: 8px 12px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 2px;
         outline: 0;
-        background: transparent;
+        background: var(--surface);
       }
       .about-chat-form input:focus {
         border-color: var(--accent);
-        box-shadow: none;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
       }
       .about-chat-form input::placeholder {
         color: var(--on-surface-muted);
-        opacity: 1;
+        opacity: 0.8;
       }
-      .about-chat-form button,
+      .about-chat-form button {
+        padding: 8px 16px;
+        border: 1px solid var(--accent);
+        border-radius: 2px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font:
+          700 var(--fs-sm) "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.06em;
+        cursor: pointer;
+        transition: all 120ms ease;
+      }
+      .about-chat-form button:hover,
+      .about-chat-form button:focus-visible {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
       .about-chat-suggestions button {
         padding: 8px 7px;
         border: 1px solid var(--border);
         border-radius: 0;
         background: transparent;
+        color: var(--on-surface-muted);
+        font:
+          500 var(--fs-xs) "JetBrains Mono",
+          monospace;
         cursor: pointer;
       }
       .about-chat-form button {
@@ -3312,17 +3341,20 @@
       .project-entry {
         position: relative;
         display: grid;
-        grid-template-columns: 80px 1fr 140px;
+        grid-template-columns: 80px 1fr 150px;
         align-items: center;
         gap: 24px;
-        padding: 24px 12px;
-        border-bottom: 1px solid var(--border-subtle);
+        padding: 20px 18px;
+        margin-bottom: 8px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 4px;
+        background: var(--surface);
         transition:
           background-color 140ms ease,
           color 140ms ease,
           border-color 140ms ease,
-          padding 520ms cubic-bezier(0.22, 1, 0.36, 1),
-          min-height 520ms cubic-bezier(0.22, 1, 0.36, 1);
+          box-shadow 140ms ease,
+          transform 140ms ease;
         cursor: pointer;
       }
       .project-entry::before,
@@ -3381,12 +3413,12 @@
       .project-entry:hover::after {
         transform: scaleX(1);
       }
-      .project-entry:hover {
+      .project-entry:hover,
+      .project-entry:focus-visible {
         background: var(--hover-surface);
         border-color: var(--accent);
-      }
-      .project-entry:hover .project-entry-status {
-        color: var(--accent);
+        box-shadow: 0 4px 16px rgba(40, 82, 235, 0.12);
+        transform: translateY(-2px);
       }
       .project-entry:hover .project-number {
         color: var(--on-surface);
@@ -3401,16 +3433,16 @@
       .project-entry h3 {
         margin: 0 0 8px;
         font:
-          700 26px/1 "Barlow Condensed",
+          700 var(--fs-lg)/1 "Barlow Condensed",
           sans-serif;
         letter-spacing: 0.03em;
-        text-transform: uppercase;
+        text-transform: none;
       }
       .project-entry p {
         margin: 0;
         color: var(--on-surface-muted);
         font:
-          500 13px/1.5 "JetBrains Mono",
+          500 var(--fs-sm)/1.5 "JetBrains Mono",
           monospace;
         letter-spacing: 0.08em;
       }
@@ -3419,17 +3451,21 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: var(--accent);
-        font-weight: 600;
-        font-size: 13px;
+        padding: 8px 14px;
+        border: 1px solid var(--accent);
+        border-radius: 3px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-weight: 700;
+        font-size: var(--fs-sm);
         text-align: right;
-        transition: color 140ms ease;
+        transition: all 140ms ease;
       }
       .project-entry-status::after {
         content: "->";
         display: inline-block;
-        color: var(--accent);
-        opacity: 0.55;
+        color: var(--on-accent);
+        opacity: 0.9;
         transform: translateX(0);
         transition:
           opacity 180ms ease,
@@ -3820,6 +3856,7 @@
         color: var(--on-surface);
         border: 1px solid var(--border);
         text-decoration: none;
+        text-transform: none;
         transition:
           color 120ms ease,
           background-color 120ms ease;
@@ -4928,8 +4965,6 @@
       const streakCtx = streakCanvas.getContext("2d");
       const flashOverlay = document.getElementById("flash-overlay");
       const soundHint = document.getElementById("sound-hint");
-      const timerDisplay = document.getElementById("timer-display");
-      const statusLabel = document.getElementById("status-label");
 
       // Initialize DOM letter spans for both lines
       function setupTypographyElements() {
@@ -5302,14 +5337,6 @@
       const glyphsL1 = line1El.querySelectorAll(".glyph-l1");
       const glyphsL2 = line2El.querySelectorAll(".glyph-l2");
 
-      function formatTimecode(ms) {
-        const clamped = Math.min(ms, TOTAL_DURATION);
-        const totalSeconds = clamped / 1000;
-        const secs = Math.floor(totalSeconds);
-        const frac = Math.floor((clamped % 1000) / 10);
-        return `00:${secs.toString().padStart(2, "0")}.${frac.toString().padStart(2, "0")}s`;
-      }
-
       function resetVisuals() {
         if (introHandedOff) return;
         if (animReqId) cancelAnimationFrame(animReqId);
@@ -5351,8 +5378,6 @@
         hudGuides.setAttribute("opacity", "0");
         hudCornerMarks.style.opacity = "1";
 
-        timerDisplay.innerText = "00:00.00s";
-        statusLabel.innerText = "INITIALIZING 5.0S SEQUENCE...";
         microNodesLayer.innerHTML = "";
       }
 
@@ -5404,16 +5429,11 @@
         }
         const elapsed = now - startTime;
 
-        // Realtime Timecode Display
-        timerDisplay.innerText = formatTimecode(elapsed);
-
         // ========================================================
         // PHASE 1: 0.0s – 1.5s (POP IN)
         // Blueprint nodes spring up + Line 1 pop-in (0-0.8s) + Line 2 pop-in (0.8-1.4s)
         // ========================================================
         if (elapsed < T_PHASE_1_END) {
-          statusLabel.innerText =
-            "POP-IN SYNTHESIS // BOUNCY OVERSHOOT [0.0S-1.5S]";
           hudGuides.setAttribute(
             "opacity",
             Math.min(1, elapsed / 450).toFixed(2),
@@ -5509,9 +5529,6 @@
         // Surrounding blue HUD nodes and guides fade away to 0
         // ========================================================
         else if (elapsed >= T_PHASE_1_END && elapsed < T_PHASE_2_END) {
-          statusLabel.innerText =
-            "WORDMARK LOCKED // SMOOTH DIM DESCENT [1.5S-2.5S]";
-
           if (!dimHumTriggered) {
             dimHumTriggered = true;
             audio.startDimHum();
@@ -5551,9 +5568,6 @@
         // Dynamic radial light streaks rushing past viewport
         // ========================================================
         else if (elapsed >= T_PHASE_2_END && elapsed < T_PHASE_3_END) {
-          statusLabel.innerText =
-            "DOLLY ZOOM // TUNNEL ACCELERATION [2.5S-3.5S]";
-
           if (!dollyRiserTriggered) {
             dollyRiserTriggered = true;
             audio.startDollyRiser();
@@ -5584,9 +5598,6 @@
         // Crystalline shimmer / chime harmonic impact decaying into ambient stillness
         // ========================================================
         else if (elapsed >= T_PHASE_3_END && elapsed <= T_PHASE_4_END) {
-          statusLabel.innerText =
-            "RESOLVED // READY FOR WEBPAGE RENDERING [3.5S-5.0S]";
-
           if (!flashImpactTriggered) {
             flashImpactTriggered = true;
             audio.playFlashImpactAndSettle();
@@ -5607,9 +5618,7 @@
         // COMPLETION (5.0s+)
         // ========================================================
         else if (elapsed > TOTAL_DURATION) {
-          timerDisplay.innerText = "00:05.00s";
           flashOverlay.style.opacity = "0";
-          statusLabel.innerText = "SEQUENCE 5.00S COMPLETED // CANVAS READY";
           isRunning = false;
           audio.stopAll();
           animReqId = null;
@@ -5736,7 +5745,7 @@
       const projects = [
         {
           id: 1,
-          name: "PROJECTMENTOR AI",
+          name: "ProjectMentor AI",
           type: "FEASIBILITY & MENTORING TOOL // GEMINI API",
           description:
             "A project feasibility and mentoring tool for final-year students — submit a project profile and get a structured feasibility analysis, technical recommendations, risks, mentor advice, and a roadmap, powered by Gemini.",
@@ -5748,7 +5757,7 @@
         },
         {
           id: 2,
-          name: "CIVICOS",
+          name: "CivicOS",
           type: "MUNICIPAL INCIDENT PLATFORM // SIH 2026",
           description:
             "A municipal incident-management platform built for Smart India Hackathon 2026 — uses an AI pipeline to cluster duplicate citizen complaints (e.g. many reports of the same pothole) into a single incident on an interactive map, instead of creating disconnected tickets. Role: Mobile Lead (Expo/React Native citizen app with camera/GPS capture & gamification UI) as part of a 6-person team.",
@@ -5759,7 +5768,7 @@
         },
         {
           id: 3,
-          name: "CHATAPP",
+          name: "ChatApp",
           type: "REAL-TIME WEBSOCKET APPLICATION",
           description:
             "A real-time chat app with custom usernames and shareable room codes — messages only broadcast within the same room, with auto-reconnect if the connection drops.",
@@ -5833,7 +5842,7 @@
                     <h3>${project.name}</h3>
                     <p>PROJECT RECORD // ${project.status}.</p>
                   </div>
-                  <span class="project-entry-status">SELECT_TO_INSPECT</span>
+                  <span class="project-entry-status">VIEW PROJECT</span>
                 </article>
               `,
             )
